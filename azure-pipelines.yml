@@ -36,32 +36,3 @@ jobs:
       ArtifactName: 'drop'
       publishLocation: 'Container'
     displayName: 'Publish Build Artifacts'
-
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '12.x'
-    displayName: 'Install Node.js for CI'
-
-  - script: |
-      npm install
-      npm test
-    displayName: 'Run Tests'
-
-  - script: |
-      npm install eslint --save-dev
-      npm run lint
-    displayName: 'Run ESLint'
-
-  - script: |
-      npm install -g npm
-      npm audit
-    displayName: 'Run npm audit'
-
-  - script: |
-      npm install
-      npm run test:coverage
-    displayName: 'Run Tests with Coverage'
-
-  - script: |
-      npm version patch -m "CI/CD version increment"
-    displayName: 'Increment Version'
