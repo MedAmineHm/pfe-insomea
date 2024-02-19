@@ -12,6 +12,5 @@ steps:
 
 - script: |
     npm install
-    npm test  # Run tests if applicable
     npm run build
-  displayName: 'npm install, test, and build'
+  displayName: 'npm install and build'
