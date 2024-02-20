@@ -36,3 +36,10 @@ jobs:
       ArtifactName: 'drop'
       publishLocation: 'Container'
     displayName: 'Publish Build Artifacts'
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'docker'
+      repository: 'mohamedamine1'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+    displayName: 'Build and Push Docker Image'
