@@ -131,6 +131,10 @@ export default function IndexNavbar() {
                   <i className="tim-icons icon-single-02" />
                   Login Page
                 </DropdownItem>
+                <DropdownItem tag={Link} to="/architecture-flow ">
+                  <i className="tim-icons icon-image-02" />
+                  Architecture Flow
+                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem className="p-0">

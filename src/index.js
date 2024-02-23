@@ -11,6 +11,7 @@ import LandingPage from "views/examples/LandingPage.js";
 import RegisterPage from "views/examples/RegisterPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import LoginPage from "views/examples/LoginPage.js";
+import ArchitectureFlow from "views/examples/ArchitectureFlow";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -22,6 +23,7 @@ root.render(
       <Route path="/register-page" element={<RegisterPage />} />
       <Route path="/profile-page" element={<ProfilePage />} />
       <Route path="/login-page" element={<LoginPage />} />
+      <Route path="/architecture-flow" element={<ArchitectureFlow />} />
       <Route path="*" element={<Navigate to="/components" replace />} />
     </Routes>
   </BrowserRouter>

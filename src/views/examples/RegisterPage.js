@@ -175,7 +175,7 @@ export default function RegisterPage() {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Confirm Password"
+                            placeholder="Password"
                             type="password" // Change this line
                             onChange={(e) => setPassword(e.target.value)}
                             onFocus={(e) => setPasswordFocus(true)}

@@ -1,7 +1,6 @@
 import React from "react";
 import classnames from "classnames";
 import axios from "axios";
-import bcrypt from "bcryptjs";
 
 import { useNavigate } from "react-router-dom";
 
@@ -38,12 +37,11 @@ export default function LoginPage() {
   const [emailFocus, setEmailFocus] = React.useState(false);
   const [passwordFocus, setPasswordFocus] = React.useState(false);
   const navigate = useNavigate();
-  const handleLogin = async () => {
-    const hashedPassword = await bcrypt.hash(password, 10);
 
+  const handleLogin = async () => {
     const userData = {
       email,
-      password: hashedPassword,
+      password,
     };
 
     try {
@@ -52,27 +50,31 @@ export default function LoginPage() {
         userData
       );
 
-      console.log("Login successful:", response.data);
+      // Assuming response.data contains user and token properties
+      const { user, token } = response.data;
+
+      console.log("Login successful:", user);
+
+      // Store the token in localStorage or cookies for future use
+      // Example using localStorage:
+      localStorage.setItem("token", token);
+
+      // Redirect to the home page after successful login
       navigate("/");
-      // Handle the successful login, such as storing the token in local storage, etc.
     } catch (error) {
       console.error("Error during login:", error);
 
       if (error.response) {
-        // The request was made and the server responded with a non-success status
         console.error("Response data:", error.response.data);
         console.error("Response status:", error.response.status);
+
+        // Add logic to display appropriate error messages to the user
       } else if (error.request) {
-        // The request was made but no response was received
         console.error("Request error:", error.request);
       } else {
-        // Something happened in setting up the request that triggered an Error
         console.error("Error message:", error.message);
       }
-
-      // Handle the login error, e.g., display an error message to the user
     }
-    //
   };
 
   React.useEffect(() => {
@@ -161,7 +163,7 @@ export default function LoginPage() {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Confirm Password"
+                            placeholder="Password"
                             type="password" // Change this line
                             onChange={(e) => setPassword(e.target.value)}
                             onFocus={(e) => setPasswordFocus(true)}
