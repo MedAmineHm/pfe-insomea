@@ -3,6 +3,7 @@ import classnames from "classnames";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -207,6 +208,15 @@ export default function RegisterPage() {
                       >
                         Get Started
                       </Button>
+                      <div className="text-center">
+                        <p>
+                          Already have an account?{" "}
+                          <Link to="/login-page" target="_blank">
+                            Login here
+                          </Link>
+                          .
+                        </p>
+                      </div>
                     </CardFooter>
                   </Card>
                 </Col>

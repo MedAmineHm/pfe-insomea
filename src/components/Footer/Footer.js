@@ -18,6 +18,9 @@ export default function Footer() {
         <Row>
           <Col md="3">
             <h1 className="title">AZURE•</h1>
+            <p className="footer-text">
+              Blueprints for Scalable and Robust Cloud Solutions
+            </p>
           </Col>
           <Col md="3">
             <Nav>
@@ -51,44 +54,50 @@ export default function Footer() {
 
           <Col md="3">
             <h3 className="title">Follow us:</h3>
-            <div className="btn-wrapper profile">
+            <div className="social-icons">
               <Button
                 className="btn-icon btn-neutral btn-round btn-simple"
                 color="default"
                 href="https://twitter.com/Insomea_Cloud"
-                id="tooltip622135962"
+                id="tooltipTwitter"
                 target="_blank"
               >
                 <i className="fab fa-twitter" />
+                <UncontrolledTooltip delay={0} target="tooltipTwitter">
+                  Twitter
+                </UncontrolledTooltip>
               </Button>
-              <UncontrolledTooltip delay={0} target="tooltip622135962">
-                Follow us
-              </UncontrolledTooltip>
               <Button
                 className="btn-icon btn-neutral btn-round btn-simple"
                 color="default"
                 href="https://www.facebook.com/search/top?q=insomea"
-                id="tooltip230450801"
+                id="tooltipFacebook"
                 target="_blank"
               >
                 <i className="fab fa-facebook-square" />
+                <UncontrolledTooltip delay={0} target="tooltipFacebook">
+                  Facebook
+                </UncontrolledTooltip>
               </Button>
-              <UncontrolledTooltip delay={0} target="tooltip230450801">
-                Like us
-              </UncontrolledTooltip>
               <Button
                 className="btn-icon btn-neutral btn-round btn-simple"
                 color="default"
-                href="https://dribbble.com/creativetim"
-                id="tooltip318450378"
+                href="https://www.instagram.com/insomea/"
+                id="tooltipInstagram"
                 target="_blank"
               >
-                <i className="fab fa-dribbble" />
+                <i className="fab fa-instagram" />
+                <UncontrolledTooltip delay={0} target="tooltipInstagram">
+                  Instagram
+                </UncontrolledTooltip>
               </Button>
-              <UncontrolledTooltip delay={0} target="tooltip318450378">
-                Follow us
-              </UncontrolledTooltip>
             </div>
+          </Col>
+
+          <Col md="3">
+            <h3 className="title">Contact us:</h3>
+            <p className="footer-text">Email: info@azureblueprints.com</p>
+            <p className="footer-text">Phone: +1 (123) 456-7890</p>
           </Col>
         </Row>
       </Container>

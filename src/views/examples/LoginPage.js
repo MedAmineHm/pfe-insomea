@@ -1,10 +1,9 @@
 import React from "react";
 import classnames from "classnames";
 import axios from "axios";
-
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-// reactstrap components
 import {
   Button,
   Card,
@@ -36,6 +35,8 @@ export default function LoginPage() {
   const [squares7and8, setSquares7and8] = React.useState("");
   const [emailFocus, setEmailFocus] = React.useState(false);
   const [passwordFocus, setPasswordFocus] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -45,47 +46,86 @@ export default function LoginPage() {
     };
 
     try {
+      setLoading(true);
+
       const response = await axios.post(
         "http://localhost:5000/auth/login",
-        userData
+        userData,
+        { withCredentials: true }
       );
 
-      // Assuming response.data contains user and token properties
       const { user, token } = response.data;
 
       console.log("Login successful:", user);
 
-      // Store the token in localStorage or cookies for future use
-      // Example using localStorage:
       localStorage.setItem("token", token);
 
-      // Redirect to the home page after successful login
       navigate("/");
     } catch (error) {
       console.error("Error during login:", error);
 
-      if (error.response) {
-        console.error("Response data:", error.response.data);
-        console.error("Response status:", error.response.status);
-
-        // Add logic to display appropriate error messages to the user
+      if (error.response && error.response.status === 401) {
+        setError("Invalid credentials");
+      } else if (error.response) {
+        setError("An error occurred");
       } else if (error.request) {
-        console.error("Request error:", error.request);
+        setError("Request error");
       } else {
-        console.error("Error message:", error.message);
+        setError("Error message");
       }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGmailLogin = async () => {
+    try {
+      setLoading(true);
+
+      const authWindow = window.open(
+        "http://localhost:5000/auth/google/login",
+        "_blank"
+      );
+
+      window.addEventListener("message", handleMessage);
+    } catch (error) {
+      setError("Error during Gmail login");
+      console.error("Error during Gmail login:", error);
+      setLoading(false);
+    }
+  };
+
+  const handleMessage = (event) => {
+    if (event.data === "closeWindow") {
+      handleGoogleLoginResponse();
+    }
+  };
+
+  const handleGoogleLoginResponse = async () => {
+    try {
+      setLoading(true);
+
+      setLoading(false);
+
+      console.log("Google login successful!");
+      navigate("/login-page");
+    } catch (error) {
+      setError("Error during Google login verification");
+      console.error("Error during Google login verification:", error);
+      setLoading(false);
     }
   };
 
   React.useEffect(() => {
     document.body.classList.toggle("register-page");
     document.documentElement.addEventListener("mousemove", followCursor);
-    // Specify how to clean up after this effect:
+
     return function cleanup() {
       document.body.classList.toggle("register-page");
       document.documentElement.removeEventListener("mousemove", followCursor);
     };
   }, []);
+
   const followCursor = (event) => {
     let posX = event.clientX - window.innerWidth / 2;
     let posY = event.clientY - window.innerWidth / 6;
@@ -104,6 +144,7 @@ export default function LoginPage() {
         "deg)"
     );
   };
+
   return (
     <>
       <ExamplesNavbar />
@@ -164,7 +205,7 @@ export default function LoginPage() {
                           </InputGroupAddon>
                           <Input
                             placeholder="Password"
-                            type="password" // Change this line
+                            type="password"
                             onChange={(e) => setPassword(e.target.value)}
                             onFocus={(e) => setPasswordFocus(true)}
                             onBlur={(e) => setPasswordFocus(false)}
@@ -186,15 +227,46 @@ export default function LoginPage() {
                         </FormGroup>
                       </Form>
                     </CardBody>
-                    <CardFooter>
+                    <CardFooter className="text-center">
                       <Button
                         className="btn-round"
                         color="primary"
                         size="lg"
                         onClick={handleLogin}
+                        disabled={loading}
                       >
-                        Login
+                        {loading ? "Logging in..." : "Login"}
                       </Button>
+
+                      <div className="text-center mt-3">
+                        <Button
+                          className="btn-round"
+                          color="danger"
+                          onClick={handleGmailLogin}
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <i className="fas fa-spinner fa-spin" />
+                          ) : (
+                            <span>
+                              <i className="fab fa-google" /> Login with Gmail
+                            </span>
+                          )}
+                        </Button>
+                      </div>
+
+                      {error && (
+                        <div className="text-center mt-3 text-danger">
+                          {error}
+                        </div>
+                      )}
+
+                      <div className="text-center mt-3">
+                        <p>
+                          Don't have an account?{" "}
+                          <Link to="/register-page"> Register here</Link>.
+                        </p>
+                      </div>
                     </CardFooter>
                   </Card>
                 </Col>

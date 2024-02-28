@@ -1,0 +1,79 @@
+/* PageHeader.css */
+
+.page-header {
+  position: relative;
+  background-size: cover;
+  background-position: center center;
+  min-height: 100vh;
+}
+
+.page-header .squares {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: #f8f8f8;
+  border-radius: 4px;
+}
+
+.page-header .square1 {
+  top: 5%;
+  left: 5%;
+}
+
+.page-header .square2 {
+  top: 20%;
+  left: 15%;
+}
+
+.page-header .square3 {
+  top: 40%;
+  left: 10%;
+}
+
+.page-header .square4 {
+  top: 60%;
+  left: 20%;
+}
+
+.page-header .square5 {
+  top: 80%;
+  left: 5%;
+}
+
+.page-header .square6 {
+  top: 90%;
+  left: 25%;
+}
+
+.page-header .square7 {
+  top: 75%;
+  left: 80%;
+}
+
+.page-header .brand {
+  textalign: center;
+  color: #fff;
+}
+
+.page-header .h1-seo {
+  fontsize: 3.5rem;
+  fontweight: 700;
+  lineheight: 1.5;
+}
+
+.page-header h3 {
+  fontsize: 1.5rem;
+  fontweight: 400;
+  lineheight: 1.5;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .page-header .h1-seo {
+    fontsize: 2.5rem;
+  }
+
+  .page-header h3 {
+    fontsize: 1.2rem;
+  }
+}
