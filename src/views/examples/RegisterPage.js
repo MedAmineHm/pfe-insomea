@@ -123,7 +123,7 @@ export default function RegisterPage() {
                     <CardHeader>
                       <CardImg
                         alt="..."
-                        src={require("assets/img/square-purple-1.png")}
+                        src={require("assets/img/square5.png")}
                       />
                       <CardTitle tag="h4">Register</CardTitle>
                     </CardHeader>
@@ -211,6 +211,7 @@ export default function RegisterPage() {
                             <a
                               href="#pablo"
                               onClick={(e) => e.preventDefault()}
+                              style={{ color: "#7956fd" }}
                             >
                               terms and conditions
                             </a>
@@ -225,6 +226,7 @@ export default function RegisterPage() {
                         color="primary"
                         size="lg"
                         onClick={onRegister}
+                        style={{ background: "#7956fd" }}
                       >
                         Register
                       </Button>
@@ -233,13 +235,18 @@ export default function RegisterPage() {
                         color="primary"
                         size="lg"
                         onClick={onRegisterWithGoogle}
+                        style={{ background: "#7956fd" }}
                       >
                         Register with Google
                       </Button>
                       <div className="text-center">
                         <p>
                           Already have an account?{" "}
-                          <Link to="/login-page" target="_blank">
+                          <Link
+                            to="/login-page"
+                            target="_blank"
+                            style={{ color: "#7956fd" }}
+                          >
                             Login here
                           </Link>
                           .

@@ -9,7 +9,6 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  CardImg,
   CardTitle,
   Label,
   FormGroup,
@@ -93,6 +92,7 @@ export default function ForgotPasswordPage() {
                     id="square7"
                     style={{
                       transform: `perspective(500px) rotateY(${squares7and8})`,
+                      background: "#1a56a2",
                     }}
                   />
                   <div
@@ -105,11 +105,13 @@ export default function ForgotPasswordPage() {
 
                   <Card className="card-register">
                     <CardHeader>
-                      <CardImg
-                        alt="..."
-                        src={require("assets/img/square-purple-1.png")}
-                      />
-                      <CardTitle tag="h1">Reset password</CardTitle>
+                      <CardTitle
+                        tag="h1"
+                        className="text-sm"
+                        style={{ background: "#1e8af8" }}
+                      >
+                        reset password
+                      </CardTitle>{" "}
                     </CardHeader>
                     <CardBody>
                       <p className="text-center">
@@ -143,6 +145,7 @@ export default function ForgotPasswordPage() {
                             <a
                               href="#pablo"
                               onClick={(e) => e.preventDefault()}
+                              style={{ colors: "#7956fd" }}
                             >
                               terms and conditions
                             </a>
@@ -158,6 +161,7 @@ export default function ForgotPasswordPage() {
                         size="lg"
                         onClick={onSubmit}
                         disabled={loading}
+                        style={{ background: "#7956fd" }}
                       >
                         {loading ? "Submit..." : "Submit"}
                       </Button>
@@ -175,32 +179,32 @@ export default function ForgotPasswordPage() {
               <div
                 className="square square-1"
                 id="square1"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#1e3d89" }}
               />
               <div
                 className="square square-2"
                 id="square2"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#1a498e" }}
               />
               <div
                 className="square square-3"
                 id="square3"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-4"
                 id="square4"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-5"
                 id="square5"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-6"
                 id="square6"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
             </Container>
           </div>

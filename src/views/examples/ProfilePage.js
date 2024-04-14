@@ -18,13 +18,6 @@ export default function ProfilePage() {
           {/* Your existing code for images and shapes */}
         </div>
 
-        {/* Sections with images */}
-        <section className="section section-lg">
-          {/* Your existing code for images */}
-        </section>
-
-        {/* Additional sections with images */}
-
         <Footer />
       </div>
     </>

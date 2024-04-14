@@ -17,7 +17,6 @@ import {
   Form,
   FormGroup,
   Label,
-  CardImg,
   CardTitle,
   Alert, // Add this import for displaying error messages
 } from "reactstrap";
@@ -105,6 +104,7 @@ export default function ResetPasswordPage() {
                     id="square7"
                     style={{
                       transform: `perspective(500px) rotateY(${squares7and8})`,
+                      background: "#1a56a2",
                     }}
                   />
                   <div
@@ -117,12 +117,14 @@ export default function ResetPasswordPage() {
 
                   <Card className="card-register">
                     <CardHeader>
-                      <CardImg
-                        alt="..."
-                        src={require("assets/img/square-purple-1.png")}
-                      />
-                      <CardTitle tag="h1">Create password</CardTitle>
-                      <p>Please create a new password for your account</p>
+                      <CardTitle
+                        tag="h1"
+                        className="text-sm"
+                        style={{ background: "#1e8af8" }}
+                      >
+                        Create password
+                      </CardTitle>
+                      <p> Please create a new password for your account</p>
                     </CardHeader>
                     <CardBody>
                       <Form className="form">
@@ -172,6 +174,7 @@ export default function ResetPasswordPage() {
                             <a
                               href="#pablo"
                               onClick={(e) => e.preventDefault()}
+                              style={{ color: "#7956fd" }}
                             >
                               terms and conditions
                             </a>
@@ -193,6 +196,7 @@ export default function ResetPasswordPage() {
                         size="lg"
                         onClick={onSubmit}
                         disabled={loading}
+                        style={{ background: "#7956fd" }}
                       >
                         {loading ? "Submitting..." : "Submit"}
                       </Button>
@@ -204,32 +208,32 @@ export default function ResetPasswordPage() {
               <div
                 className="square square-1"
                 id="square1"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#1e3d89" }}
               />
               <div
                 className="square square-2"
                 id="square2"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#1a498e" }}
               />
               <div
                 className="square square-3"
                 id="square3"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-4"
                 id="square4"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-5"
                 id="square5"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-6"
                 id="square6"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
             </Container>
           </div>

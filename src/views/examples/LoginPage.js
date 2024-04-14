@@ -117,7 +117,7 @@ export default function LoginPage() {
                     <CardHeader>
                       <CardImg
                         alt="..."
-                        src={require("assets/img/square4.png")}
+                        src={require("assets/img/square5.png")}
                         style={{ background: "#1f2251" }}
                       />
                       <CardTitle tag="h4">Login</CardTitle>
@@ -168,6 +168,7 @@ export default function LoginPage() {
                             <a
                               href="#pablo"
                               onClick={(e) => e.preventDefault()}
+                              style={{ color: "#7956fd" }}
                             >
                               terms and conditions
                             </a>
@@ -183,7 +184,7 @@ export default function LoginPage() {
                         size="lg"
                         onClick={onLogin}
                         disabled={loading}
-                        style={{ background: "#1b2b5e" }}
+                        style={{ background: "#7956fd" }}
                       >
                         {loading ? "Logging in..." : "Login"}
                       </Button>
@@ -194,6 +195,7 @@ export default function LoginPage() {
                         size="lg"
                         onClick={onLoginWithGoogle}
                         disabled={loading}
+                        style={{ background: "#7956fd" }}
                       >
                         {loading ? "Logging in..." : "Sign In With Google"}
                       </Button>
@@ -205,14 +207,24 @@ export default function LoginPage() {
                       )}
 
                       <div className="text-center mt-3">
-                        <Link to="/forgot-password/:email">
+                        <Link
+                          to="/forgot-password/:email"
+                          style={{ color: "#7956fd" }}
+                        >
                           Forgot Password?
                         </Link>
                       </div>
                       <div className="text-center mt-3">
                         <p>
                           Don't have an account?{" "}
-                          <Link to="/register-page"> Register here</Link>.
+                          <Link
+                            to="/register-page"
+                            style={{ color: "#7956fd" }}
+                          >
+                            {" "}
+                            Register here
+                          </Link>
+                          .
                         </p>
                       </div>
                     </CardFooter>
