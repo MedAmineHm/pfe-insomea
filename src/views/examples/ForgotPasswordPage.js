@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import classnames from "classnames";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
 
 import {
   Button,
@@ -26,36 +26,27 @@ import {
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
 
-export default function LoginPage() {
+export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [squares1to6, setSquares1to6] = useState("");
   const [squares7and8, setSquares7and8] = useState("");
   const [emailFocus, setEmailFocus] = useState(false);
-  const [passwordFocus, setPasswordFocus] = useState(false);
-  const [loading] = useState(false);
-  const [error] = useState(null); // Add setError state
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null); // Add setError state
   const navigate = useNavigate();
-
-  const onLogin = async () => {
+  const onSubmit = async () => {
     try {
-      const res = await axios.post("http://localhost:3001/auth/login", {
+      setLoading(true);
+      await axios.post("http://localhost:3001/auth/forgot-password", {
         email,
-        password,
       });
-      localStorage.setItem("token", res.data.token);
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-      alert("can not login");
-    }
-  };
-
-  const onLoginWithGoogle = () => {
-    try {
-      window.open(`http://localhost:3001/auth/google/`, "_self");
+      alert("Password reset email sent successfully!");
+      navigate("/login-page");
     } catch (ex) {
-      console.log(ex);
+      console.error(ex);
+      setError("Failed to submit. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -102,7 +93,6 @@ export default function LoginPage() {
                     id="square7"
                     style={{
                       transform: `perspective(500px) rotateY(${squares7and8})`,
-                      background: "#1a56a2",
                     }}
                   />
                   <div
@@ -117,12 +107,15 @@ export default function LoginPage() {
                     <CardHeader>
                       <CardImg
                         alt="..."
-                        src={require("assets/img/square4.png")}
-                        style={{ background: "#1f2251" }}
+                        src={require("assets/img/square-purple-1.png")}
                       />
-                      <CardTitle tag="h4">Login</CardTitle>
+                      <CardTitle tag="h1">Reset password</CardTitle>
                     </CardHeader>
                     <CardBody>
+                      <p className="text-center">
+                        Enter your email address, and we will send you
+                        instructions on how to create a new password.
+                      </p>
                       <Form className="form">
                         <InputGroup
                           className={classnames({
@@ -140,24 +133,6 @@ export default function LoginPage() {
                             onChange={(e) => setEmail(e.target.value)}
                             onFocus={() => setEmailFocus(true)}
                             onBlur={() => setEmailFocus(false)}
-                          />
-                        </InputGroup>
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": passwordFocus,
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-lock-circle" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Password"
-                            type="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            onFocus={() => setPasswordFocus(true)}
-                            onBlur={() => setPasswordFocus(false)}
                           />
                         </InputGroup>
 
@@ -181,21 +156,10 @@ export default function LoginPage() {
                         className="btn-round"
                         color="primary"
                         size="lg"
-                        onClick={onLogin}
-                        disabled={loading}
-                        style={{ background: "#1b2b5e" }}
-                      >
-                        {loading ? "Logging in..." : "Login"}
-                      </Button>
-
-                      <Button
-                        className="btn-round"
-                        color="primary"
-                        size="lg"
-                        onClick={onLoginWithGoogle}
+                        onClick={onSubmit}
                         disabled={loading}
                       >
-                        {loading ? "Logging in..." : "Sign In With Google"}
+                        {loading ? "Submit..." : "Submit"}
                       </Button>
 
                       {error && (
@@ -203,18 +167,6 @@ export default function LoginPage() {
                           {error}
                         </div>
                       )}
-
-                      <div className="text-center mt-3">
-                        <Link to="/forgot-password/:email">
-                          Forgot Password?
-                        </Link>
-                      </div>
-                      <div className="text-center mt-3">
-                        <p>
-                          Don't have an account?{" "}
-                          <Link to="/register-page"> Register here</Link>.
-                        </p>
-                      </div>
                     </CardFooter>
                   </Card>
                 </Col>
@@ -223,32 +175,32 @@ export default function LoginPage() {
               <div
                 className="square square-1"
                 id="square1"
-                style={{ transform: squares1to6, background: "#1e3d89" }}
+                style={{ transform: squares1to6 }}
               />
               <div
                 className="square square-2"
                 id="square2"
-                style={{ transform: squares1to6, background: "#1a498e" }}
+                style={{ transform: squares1to6 }}
               />
               <div
                 className="square square-3"
                 id="square3"
-                style={{ transform: squares1to6, background: "#18356e" }}
+                style={{ transform: squares1to6 }}
               />
               <div
                 className="square square-4"
                 id="square4"
-                style={{ transform: squares1to6, background: "#18356e" }}
+                style={{ transform: squares1to6 }}
               />
               <div
                 className="square square-5"
                 id="square5"
-                style={{ transform: squares1to6, background: "#18356e" }}
+                style={{ transform: squares1to6 }}
               />
               <div
                 className="square square-6"
                 id="square6"
-                style={{ transform: squares1to6, background: "#18356e" }}
+                style={{ transform: squares1to6 }}
               />
             </Container>
           </div>

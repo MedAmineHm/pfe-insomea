@@ -1,7 +1,6 @@
 import React from "react";
 import classnames from "classnames";
 import axios from "axios";
-import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -31,47 +30,46 @@ import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
 
 export default function RegisterPage() {
-  const [fullName, setFullName] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [lastNameFocus, setLastNameFocus] = React.useState(false);
+
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [squares1to6, setSquares1to6] = React.useState("");
   const [squares7and8, setSquares7and8] = React.useState("");
-  const [fullNameFocus, setFullNameFocus] = React.useState(false);
+  const [firstNameFocus, setFirstNameFocus] = React.useState(false);
   const [emailFocus, setEmailFocus] = React.useState(false);
   const [passwordFocus, setPasswordFocus] = React.useState(false);
   const navigate = useNavigate();
 
-  const handleRegistration = async () => {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const userData = {
-      fullName: fullName, // or simply fullName, as key and variable name match
-      email,
-      password: hashedPassword,
-    };
-
+  const onRegister = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/users",
-        userData
-      );
-      console.log(response.data);
+      const res = await axios.post("http://localhost:3001/auth/register", {
+        email,
+        firstName,
+        lastName,
+        password,
+      });
+      localStorage.setItem("token", res.data.token);
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      alert("can not register");
+    }
+  };
 
-      // Redirect to the login page after successful registration
-      navigate("/login-page");
-    } catch (error) {
-      console.error("Error:", error);
-      if (error.response) {
-        console.error("Response error:", error.response.data);
-        console.error("Response status:", error.response.status);
-      } else if (error.request) {
-        console.error("Request error:", error.request);
-      } else {
-        console.error("Error message:", error.message);
-      }
+  const onRegisterWithGoogle = () => {
+    try {
+      window.open(`http://localhost:3001/auth/google/`, "_self");
+    } catch (ex) {
+      console.log(ex);
     }
   };
 
   React.useEffect(() => {
+    //if (localStorage.getItem("token")) navigate("/");
+
     document.body.classList.toggle("register-page");
     document.documentElement.addEventListener("mousemove", followCursor);
     // Specify how to clean up after this effect:
@@ -111,7 +109,10 @@ export default function RegisterPage() {
                   <div
                     className="square square-7"
                     id="square7"
-                    style={{ transform: squares7and8 }}
+                    style={{
+                      transform: `perspective(500px) rotateY(${squares7and8})`,
+                      background: "#1a56a2",
+                    }}
                   />
                   <div
                     className="square square-8"
@@ -130,7 +131,7 @@ export default function RegisterPage() {
                       <Form className="form">
                         <InputGroup
                           className={classnames({
-                            "input-group-focus": fullNameFocus,
+                            "input-group-focus": firstNameFocus,
                           })}
                         >
                           <InputGroupAddon addonType="prepend">
@@ -139,12 +140,31 @@ export default function RegisterPage() {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Full Name"
+                            placeholder="First Name"
                             type="text"
-                            value={fullName}
-                            onChange={(e) => setFullName(e.target.value)}
-                            onFocus={(e) => setFullNameFocus(true)}
-                            onBlur={(e) => setFullNameFocus(false)}
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            onFocus={(e) => setFirstNameFocus(true)}
+                            onBlur={(e) => setFirstNameFocus(false)}
+                          />
+                        </InputGroup>
+                        <InputGroup
+                          className={classnames({
+                            "input-group-focus": lastNameFocus,
+                          })}
+                        >
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="tim-icons icon-single-02" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Last Name"
+                            type="text"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            onFocus={(e) => setLastNameFocus(true)}
+                            onBlur={(e) => setLastNameFocus(false)}
                           />
                         </InputGroup>
                         <InputGroup
@@ -204,9 +224,17 @@ export default function RegisterPage() {
                         className="btn-round"
                         color="primary"
                         size="lg"
-                        onClick={handleRegistration}
+                        onClick={onRegister}
                       >
-                        Get Started
+                        Register
+                      </Button>
+                      <Button
+                        className="btn-round"
+                        color="primary"
+                        size="lg"
+                        onClick={onRegisterWithGoogle}
+                      >
+                        Register with Google
                       </Button>
                       <div className="text-center">
                         <p>
@@ -225,32 +253,32 @@ export default function RegisterPage() {
               <div
                 className="square square-1"
                 id="square1"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#1e3d89" }}
               />
               <div
                 className="square square-2"
                 id="square2"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#1a498e" }}
               />
               <div
                 className="square square-3"
                 id="square3"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-4"
                 id="square4"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-5"
                 id="square5"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-6"
                 id="square6"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
             </Container>
           </div>
