@@ -4,15 +4,17 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 const AcceptGoogleAuth = () => {
   const navigate = useNavigate();
-  let [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams(); // Changed from let to const
 
   useEffect(() => {
     const token = searchParams.get("token");
     if (token) {
       localStorage.setItem("token", token);
+      navigate("/board");
+    } else {
       navigate("/");
-    } else navigate("/profile-page");
-  }, []);
+    }
+  }, [navigate, searchParams]); // Added navigate and searchParams to the dependency array
 
   return (
     <Box>

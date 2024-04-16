@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import classnames from "classnames";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 // reactstrap components
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
@@ -28,6 +26,7 @@ import {
 // core components
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
+import Button from "react-bootstrap/Button";
 
 export default function RegisterPage() {
   const [firstName, setFirstName] = React.useState("");
@@ -41,9 +40,11 @@ export default function RegisterPage() {
   const [firstNameFocus, setFirstNameFocus] = React.useState(false);
   const [emailFocus, setEmailFocus] = React.useState(false);
   const [passwordFocus, setPasswordFocus] = React.useState(false);
-  const navigate = useNavigate();
+  const [registerLoading, setRegisterLoading] = useState(false);
+  const [registerGoogleLoading, setRegisterGoogleLoading] = useState(false);
 
   const onRegister = async () => {
+    setRegisterLoading(true);
     try {
       const res = await axios.post("http://localhost:3001/auth/register", {
         email,
@@ -52,7 +53,10 @@ export default function RegisterPage() {
         password,
       });
       localStorage.setItem("token", res.data.token);
-      navigate("/");
+      setTimeout(() => {
+        setRegisterLoading(false);
+        window.location.href = "/login-page";
+      }, 2000);
     } catch (err) {
       console.error(err);
       alert("can not register");
@@ -61,9 +65,27 @@ export default function RegisterPage() {
 
   const onRegisterWithGoogle = () => {
     try {
-      window.open(`http://localhost:3001/auth/google/`, "_self");
-    } catch (ex) {
-      console.log(ex);
+      setRegisterGoogleLoading(true);
+
+      const authWindow = window.open(
+        `http://localhost:3001/auth/google/`,
+        "_self"
+      );
+
+      const checkAuthInterval = setInterval(() => {
+        if (authWindow.closed) {
+          clearInterval(checkAuthInterval);
+
+          setRegisterGoogleLoading(false);
+
+          window.location.href = "/board";
+        }
+      }, 2000);
+    } catch (error) {
+      console.error(
+        "Une erreur s'est produite lors de la tentative de connexion avec Google:",
+        error
+      );
     }
   };
 
@@ -227,8 +249,9 @@ export default function RegisterPage() {
                         size="lg"
                         onClick={onRegister}
                         style={{ background: "#7956fd" }}
+                        disabled={registerLoading}
                       >
-                        Register
+                        {registerLoading ? "Register..." : "register"}
                       </Button>
                       <Button
                         className="btn-round"
@@ -236,8 +259,11 @@ export default function RegisterPage() {
                         size="lg"
                         onClick={onRegisterWithGoogle}
                         style={{ background: "#7956fd" }}
+                        disabled={registerGoogleLoading}
                       >
-                        Register with Google
+                        {registerGoogleLoading
+                          ? "Register with Google..."
+                          : "Register with Google"}
                       </Button>
                       <div className="text-center">
                         <p>

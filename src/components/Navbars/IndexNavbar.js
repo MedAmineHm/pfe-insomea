@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Collapse,
@@ -16,17 +16,23 @@ import {
   Col,
   UncontrolledTooltip,
 } from "reactstrap";
+import "components/Navbars/IndexNavbar.css";
+import Button from "react-bootstrap/Button";
 
 export default function IndexNavbar() {
-  const [collapseOpen, setCollapseOpen] = React.useState(false);
-  const [collapseOut, setCollapseOut] = React.useState("");
-  const [color, setColor] = React.useState("navbar-transparent");
-  React.useEffect(() => {
+  const [collapseOpen, setCollapseOpen] = useState(false);
+  const [collapseOut, setCollapseOut] = useState("");
+  const [color, setColor] = useState("navbar-transparent");
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [startForFreeLoading, setStartForFreeLoading] = useState(false);
+
+  useEffect(() => {
     window.addEventListener("scroll", changeColor);
-    return function cleanup() {
+    return () => {
       window.removeEventListener("scroll", changeColor);
     };
   }, []);
+
   const changeColor = () => {
     if (
       document.documentElement.scrollTop > 99 ||
@@ -40,13 +46,34 @@ export default function IndexNavbar() {
       setColor("navbar-transparent");
     }
   };
+
+  const handleLogin = () => {
+    setLoginLoading(true);
+
+    setTimeout(() => {
+      setLoginLoading(false);
+      window.location.href = "/login-page";
+    }, 2000);
+  };
+
+  const handleStartForFree = () => {
+    setStartForFreeLoading(true);
+
+    setTimeout(() => {
+      setStartForFreeLoading(false);
+      window.location.href = "/login-page";
+    }, 2000);
+  };
+
   const toggleCollapse = () => {
     document.documentElement.classList.toggle("nav-open");
     setCollapseOpen(!collapseOpen);
   };
+
   const onCollapseExiting = () => {
     setCollapseOut("collapsing-out");
   };
+
   const onCollapseExited = () => {
     setCollapseOut("");
   };
@@ -129,6 +156,7 @@ export default function IndexNavbar() {
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
+
             <NavItem className="p-0">
               <NavLink
                 data-placement="bottom"
@@ -165,6 +193,37 @@ export default function IndexNavbar() {
                 <p className="d-lg-none d-xl-none">Instagram</p>
               </NavLink>
             </NavItem>
+
+            <Nav
+              className="navbar-nav ml-auto"
+              navbar
+              style={{ marginLeft: "auto", marginRight: "0" }}
+            >
+              <NavItem className="p-0">
+                <Button
+                  color="primary"
+                  tag={Link}
+                  to="/login-page"
+                  style={{ background: "#2d2d2d" }}
+                  disabled={loginLoading}
+                  onClick={handleLogin}
+                >
+                  {loginLoading ? "Login..." : "Login"}
+                </Button>
+              </NavItem>
+              <NavItem className="p-0">
+                <Button
+                  color="primary"
+                  tag={Link}
+                  to="/login-page"
+                  style={{ background: "#2d2d2d" }}
+                  disabled={startForFreeLoading}
+                  onClick={handleStartForFree}
+                >
+                  {startForFreeLoading ? "Start for free..." : "Start for free"}
+                </Button>
+              </NavItem>
+            </Nav>
           </Nav>
         </Collapse>
       </Container>

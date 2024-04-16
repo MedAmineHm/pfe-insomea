@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import classnames from "classnames";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
@@ -22,6 +21,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import Button from "react-bootstrap/Button";
 
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
@@ -33,18 +33,23 @@ export default function LoginPage() {
   const [squares7and8, setSquares7and8] = useState("");
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
-  const [loading] = useState(false);
   const [error] = useState(null); // Add setError state
-  const navigate = useNavigate();
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginGoogleLoading, setLoginGoogleLoading] = useState(false);
 
   const onLogin = async () => {
+    setLoginLoading(true);
+
     try {
       const res = await axios.post("http://localhost:3001/auth/login", {
         email,
         password,
       });
       localStorage.setItem("token", res.data.token);
-      navigate("/");
+      setTimeout(() => {
+        setLoginLoading(false);
+        window.location.href = "/board";
+      }, 2000);
     } catch (err) {
       console.error(err);
       alert("can not login");
@@ -53,9 +58,27 @@ export default function LoginPage() {
 
   const onLoginWithGoogle = () => {
     try {
-      window.open(`http://localhost:3001/auth/google/`, "_self");
-    } catch (ex) {
-      console.log(ex);
+      setLoginGoogleLoading(true);
+
+      const authWindow = window.open(
+        `http://localhost:3001/auth/google/`,
+        "_self"
+      );
+
+      const checkAuthInterval = setInterval(() => {
+        if (authWindow.closed) {
+          clearInterval(checkAuthInterval);
+
+          setLoginGoogleLoading(false);
+
+          window.location.href = "/board";
+        }
+      }, 2000);
+    } catch (error) {
+      console.error(
+        "Une erreur s'est produite lors de la tentative de connexion avec Google:",
+        error
+      );
     }
   };
 
@@ -183,10 +206,10 @@ export default function LoginPage() {
                         color="primary"
                         size="lg"
                         onClick={onLogin}
-                        disabled={loading}
+                        disabled={loginLoading}
                         style={{ background: "#7956fd" }}
                       >
-                        {loading ? "Logging in..." : "Login"}
+                        {loginLoading ? "Logging in..." : "Login"}
                       </Button>
 
                       <Button
@@ -194,10 +217,12 @@ export default function LoginPage() {
                         color="primary"
                         size="lg"
                         onClick={onLoginWithGoogle}
-                        disabled={loading}
+                        disabled={loginGoogleLoading}
                         style={{ background: "#7956fd" }}
                       >
-                        {loading ? "Logging in..." : "Sign In With Google"}
+                        {loginGoogleLoading
+                          ? "Logging in..."
+                          : "Sign In With Google"}
                       </Button>
 
                       {error && (
