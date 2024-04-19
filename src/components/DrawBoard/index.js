@@ -11,7 +11,7 @@ import ReactFlow, {
   getConnectedEdges,
   useReactFlow,
 } from "reactflow";
-import { find, findLastIndex, insert, propEq } from "ramda";
+import { find, findIndex, findLastIndex, insert, propEq } from "ramda";
 import debounce from "lodash.debounce";
 
 import "reactflow/dist/style.css";
@@ -52,6 +52,19 @@ const DrawBoard = () => {
 
   console.log({ edges });
 
+  console.log(nodes);
+
+  const getNodesParents = () => {
+    getCurrentIndex = (node, item) => findIndex(item =,node)
+    nodes.map((node,index) => {
+      
+      let referenceId = node.id
+      let currentParentIndex = index
+      while(currentParentIndex !== 0){
+       const currentParent = nodes.find(item => item.id = node.parentId)
+      }
+    })
+  }
   // ======================== Edge Connect ==========================================
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
