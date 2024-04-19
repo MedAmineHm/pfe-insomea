@@ -28,23 +28,12 @@ const NsgNode = ({ data, selected = false, isConnectable }) => {
       </div>
 
       <Handle
-        type="source"
-        position={Position.Top}
-        id="in"
-        isConnectable={isConnectable}
-      />
-      <Handle
-        type="source"
+        type="target"
         position={Position.Left}
         id="in"
         isConnectable={isConnectable}
       />
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        id="in"
-        isConnectable={isConnectable}
-      />
+
       <Handle
         type="source"
         position={Position.Right}

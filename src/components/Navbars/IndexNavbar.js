@@ -16,7 +16,6 @@ import {
   Col,
   UncontrolledTooltip,
 } from "reactstrap";
-import "components/Navbars/IndexNavbar.css";
 import Button from "react-bootstrap/Button";
 
 export default function IndexNavbar() {

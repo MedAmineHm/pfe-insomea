@@ -29,24 +29,6 @@ const PublicIpNode = ({ data, selected = false, isConnectable }) => {
 
       <Handle
         type="source"
-        position={Position.Top}
-        id="in"
-        isConnectable={isConnectable}
-      />
-      <Handle
-        type="source"
-        position={Position.Left}
-        id="in"
-        isConnectable={isConnectable}
-      />
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        id="in"
-        isConnectable={isConnectable}
-      />
-      <Handle
-        type="source"
         position={Position.Right}
         id="in"
         isConnectable={isConnectable}

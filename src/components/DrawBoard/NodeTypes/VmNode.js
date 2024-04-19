@@ -5,7 +5,7 @@ import { Image } from "@mantine/core";
 const vmImg =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTefgWAwpvk2wdqXFWTY8mnSa59o6lWg3xwWgPeEXh4bg&s";
 
-const VmNode = ({ data, selected = false, isConnectable }) => {
+const VmNode = ({ data, selected = false }) => {
   return (
     <>
       <div
@@ -22,28 +22,17 @@ const VmNode = ({ data, selected = false, isConnectable }) => {
       </div>
 
       <Handle
-        type="source"
-        position={Position.Top}
-        id="in"
-        isConnectable={isConnectable}
-      />
-      <Handle
-        type="source"
+        type="target"
         position={Position.Left}
         id="in"
-        isConnectable={isConnectable}
+        isConnectable={true}
       />
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        id="in"
-        isConnectable={isConnectable}
-      />
+
       <Handle
         type="source"
         position={Position.Right}
         id="in"
-        isConnectable={isConnectable}
+        isConnectable={true}
       />
     </>
   );

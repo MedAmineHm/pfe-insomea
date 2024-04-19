@@ -28,28 +28,28 @@ const DiscNode = ({ data, selected = false, isConnectable }) => {
       </div>
 
       <Handle
-        type="source"
+        type="target"
         position={Position.Top}
-        id="in"
-        isConnectable={isConnectable}
+        id="in1"
+        isConnectable={true}
       />
       <Handle
-        type="source"
+        type="target"
         position={Position.Left}
-        id="in"
-        isConnectable={isConnectable}
+        id="in2"
+        isConnectable={true}
       />
       <Handle
-        type="source"
+        type="target"
         position={Position.Bottom}
-        id="in"
-        isConnectable={isConnectable}
+        id="in3"
+        isConnectable={true}
       />
       <Handle
-        type="source"
+        type="target"
         position={Position.Right}
-        id="in"
-        isConnectable={isConnectable}
+        id="in4"
+        isConnectable={true}
       />
     </>
   );

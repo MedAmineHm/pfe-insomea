@@ -37,7 +37,7 @@ const nodeTypes = {
 
 const initialNodes = [];
 
-const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
+const initialEdges = [];
 
 let id = 0;
 const getId = (serviceId = "dndnode") => `${serviceId}_${id++}`;
@@ -49,6 +49,8 @@ const DrawBoard = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const { getIntersectingNodes } = useReactFlow();
   const [lastDropedNode, setLastDropedNode] = useState(false);
+
+  console.log({ edges });
 
   // ======================== Edge Connect ==========================================
   const onConnect = useCallback(
@@ -219,7 +221,7 @@ const DrawBoard = () => {
         case "DiscNode":
           // find a ResourceGroupNode
           const parentIntersection = find(
-            (inter) => inter.startsWith("subnet"),
+            (inter) => inter?.startsWith("subnet"),
             intersections
           );
           updateNodeParent(node, parentIntersection);
@@ -289,8 +291,6 @@ const DrawBoard = () => {
   //     setLastDropedNode();
   //   }
   // }, [lastDropedNode]);
-
-  console.log({ nodes });
 
   return (
     <div
