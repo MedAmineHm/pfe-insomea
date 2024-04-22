@@ -40,6 +40,7 @@
     "@mantine/nprogress": "^7.8.0",
     "@mantinex/mantine-logo": "^1.0.1",
     "@react-login-page/page1": "^1.0.2",
+    "@tabler/icons": "^3.2.0",
     "@tabler/icons-react": "^3.2.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",

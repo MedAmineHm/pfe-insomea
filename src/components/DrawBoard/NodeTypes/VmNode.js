@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Handle, Position } from "reactflow";
+import { Handle, NodeToolbar, Position } from "reactflow";
 import { Image } from "@mantine/core";
 
 const vmImg =
@@ -34,6 +34,15 @@ const VmNode = ({ data, selected = false }) => {
         id="in"
         isConnectable={true}
       />
+
+      <NodeToolbar
+        isVisible={data.toolbarVisible}
+        position={data.toolbarPosition}
+      >
+        <button>delete</button>
+        <button>copy</button>
+        <button>expand</button>
+      </NodeToolbar>
     </>
   );
 };

@@ -544,3 +544,7 @@ Created using IcoMoon - icomoon.io
 .icon-components::before {
   content: "\ea65";
 }
+
+.react-flow__node {
+  z-index: -1 !important;
+}

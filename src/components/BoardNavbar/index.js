@@ -38,8 +38,8 @@ const servicesMock = [
         zIndex: 1,
       },
       {
-        id: "ressourcegroup",
-        label: "Ressource Group",
+        id: "resourcegroup",
+        label: "Resource Group",
         description: "",
         icon: IconPropeller,
         type: "ResourceGroupNode",

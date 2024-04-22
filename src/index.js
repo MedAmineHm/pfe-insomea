@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { createTheme, MantineProvider, Box } from "@mantine/core";
 import "@mantine/core/styles.css";

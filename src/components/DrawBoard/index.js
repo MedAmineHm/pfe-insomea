@@ -23,6 +23,7 @@ import VmNode from "./NodeTypes/VmNode";
 import DiscNode from "./NodeTypes/DiscNode";
 import NsgNode from "./NodeTypes/NsgNode";
 import PublicIpNode from "./NodeTypes/PublicIpNode";
+import ModalForm from "./ModalForm";
 
 const nodeTypes = {
   ResourceGroupNode,
@@ -49,22 +50,21 @@ const DrawBoard = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const { getIntersectingNodes } = useReactFlow();
   const [lastDropedNode, setLastDropedNode] = useState(false);
-
-  console.log({ edges });
-
+  const [openModal, setOpenModal] = useState(false);
   console.log(nodes);
 
-  const getNodesParents = () => {
-    getCurrentIndex = (node, item) => findIndex(item =,node)
-    nodes.map((node,index) => {
-      
-      let referenceId = node.id
-      let currentParentIndex = index
-      while(currentParentIndex !== 0){
-       const currentParent = nodes.find(item => item.id = node.parentId)
-      }
-    })
-  }
+  const getNodesParents = nodes.map((node, index) => {
+    let referenceId = [node.id];
+    let currentnode = nodes[index];
+    while (currentnode.id && currentnode.id !== "location_0") {
+      referenceId = [currentnode.parentId, ...referenceId];
+      currentnode =
+        find((item) => item.id === currentnode.parentId, nodes) || [];
+    }
+
+    return { ...node, referenceId };
+  });
+
   // ======================== Edge Connect ==========================================
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
@@ -208,7 +208,7 @@ const DrawBoard = () => {
         case "VnetNode":
           // find a ResourceGroupNode
           const parentResourceIntersection = find(
-            (inter) => inter.startsWith("ressourcegroup"),
+            (inter) => inter.startsWith("resourcegroup"),
             intersections
           );
           updateNodeParent(node, parentResourceIntersection);
@@ -224,7 +224,7 @@ const DrawBoard = () => {
         case "PublicIpNode":
           // find a ResourceGroupNode
           const parentResourceForIpIntersection = find(
-            (inter) => inter.startsWith("ressourcegroup"),
+            (inter) => inter.startsWith("resourcegroup"),
             intersections
           );
           updateNodeParent(node, parentResourceForIpIntersection);
@@ -239,6 +239,8 @@ const DrawBoard = () => {
           );
           updateNodeParent(node, parentIntersection);
           break;
+        default:
+          return null;
       }
 
       /*
@@ -326,7 +328,15 @@ const DrawBoard = () => {
         nodeTypes={nodeTypes}
         onNodeDragStop={onNodeDragStop}
         fitView
+        onDoubleClick={(e) => {
+          setOpenModal(e.target.dataset.id);
+        }}
       >
+        <ModalForm
+          setOpenModal={setOpenModal}
+          openModal={openModal}
+          nodes={getNodesParents}
+        />
         <Controls />
         <MiniMap />
         <Background variant="dots" gap={12} size={1} />
