@@ -1,8 +1,10 @@
 {
-  "compilerOptions": {
-    "baseUrl": "./src",
-    "paths": {
-      "*": ["*"]
-    }
+  "apiVersion": "v1",
+  "kind": "ConfigMap",
+  "metadata": {
+    "name": "example-config"
+  },
+  "data": {
+    "key": "value"
   }
 }
