@@ -1,0 +1,18 @@
+replicaCount: 1
+
+image:
+  repository: your-registry/your-react-app-image
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: your-react-app.domain.com
+      paths:
+        - /
