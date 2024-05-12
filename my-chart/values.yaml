@@ -1,18 +1,16 @@
 replicaCount: 1
 
 image:
-  repository: your-registry/your-react-app-image
-  tag: latest
-  pullPolicy: IfNotPresent
+  repository: frontend-azure # Nom de votre image Docker
+  tag: latest # Tag de votre image Docker
+  pullPolicy: IfNotPresent # Politique de pull de l'image Docker
 
 service:
-  type: ClusterIP
-  port: 80
+  name: mon-application
+  type: LoadBalancer # Type de service Kubernetes
+  port: 80 # Port sur lequel le service exposera votre application
 
 ingress:
-  enabled: false
-  annotations: {}
+  enabled: true # Activer ou désactiver l'ingress
   hosts:
-    - host: your-react-app.domain.com
-      paths:
-        - /
+    - host: mon-application.example.com # Nom d'hôte associé à votre application dans l'ingress

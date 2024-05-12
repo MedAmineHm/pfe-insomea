@@ -1,26 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { { include "my-react-app.fullname" . } }
+  name: { { include "mon-application.fullname" . } }
   labels:
-    app.kubernetes.io/name: { { include "my-react-app.name" . } }
-    helm.sh/chart: { { include "my-react-app.chart" . } }
+    app: { { include "mon-application.name" . } }
 spec:
   replicas: { { .Values.replicaCount } }
   selector:
     matchLabels:
-      app.kubernetes.io/name: { { include "my-react-app.name" . } }
-      app.kubernetes.io/instance: { { .Release.Name } }
+      app: { { include "mon-application.name" . } }
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: { { include "my-react-app.name" . } }
-        app.kubernetes.io/instance: { { .Release.Name } }
+        app: { { include "mon-application.name" . } }
     spec:
       containers:
         - name: { { .Chart.Name } }
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: { { .Values.image.pullPolicy } }
+          image: "frontend-azure:latest" # Utilisez le nom de votre image Docker et sa version
           ports:
-            - name: http
-              containerPort: 80
+            - containerPort: 80 # Assurez-vous que le port correspond à celui exposé par votre application
+          imagePullPolicy: IfNotPresent # Vous pouvez ajuster cela selon vos besoins
