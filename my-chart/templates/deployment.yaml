@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: my-react-app
-          image: "frontend-azure:latest"
+          image: "mohamedamine1/frontend-azure:frontend" # Image Docker taguée correctement
           ports:
             - containerPort: 80

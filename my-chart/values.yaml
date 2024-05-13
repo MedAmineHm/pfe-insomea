@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: frontend-azure # Nom de votre image Docker
-  tag: latest # Tag de votre image Docker
+  tag: frontend # Tag de votre image Docker
   pullPolicy: IfNotPresent # Politique de pull de l'image Docker
 
 service:
