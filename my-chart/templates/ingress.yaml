@@ -7,14 +7,14 @@ metadata:
     app: {{ include "mon-application.name" . }}
 spec:
   rules:
-    - host: {{ .Values.ingress.hosts.host }}  # L'hôte auquel votre application sera associée
+    - host: {{ .Values.ingress.hosts.host }}
       http:
         paths:
-          - path: /  # Le chemin de l'URL auquel votre application sera associée
+          - path: /
             pathType: Prefix
             backend:
               service:
-                name: {{ include "mon-application.fullname" . }}  # Nom du service Kubernetes associé à cette règle d'ingress
+                name: {{ include "mon-application.fullname" . }}
                 port:
-                  number: 80  # Le port sur lequel votre application écoute
+                  number: 80
 {{- end -}}
