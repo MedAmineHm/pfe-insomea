@@ -8,7 +8,7 @@ image:
 service:
   name: mon-application
   type: LoadBalancer # Type de service Kubernetes
-  port: 9090 # Port sur lequel le service exposera votre application
+  port: 80 # Port sur lequel le service exposera votre application
 
 ingress:
   enabled: true # Activer ou désactiver l'ingress
