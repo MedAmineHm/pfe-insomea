@@ -1,22 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { { include "mon-application.fullname" . } }
+  name: my-react-app
   labels:
-    app: { { include "mon-application.name" . } }
+    app: my-react-app
 spec:
-  replicas: { { .Values.replicaCount } }
+  replicas: 3
   selector:
     matchLabels:
-      app: { { include "mon-application.name" . } }
+      app: my-react-app
   template:
     metadata:
       labels:
-        app: { { include "mon-application.name" . } }
+        app: my-react-app
     spec:
       containers:
-        - name: { { .Chart.Name } }
-          image: "frontend-azure:latest" # Utilisez le nom de votre image Docker et sa version
+        - name: my-react-app
+          image: "frontend-azure:latest"
           ports:
-            - containerPort: 80 # Assurez-vous que le port correspond à celui exposé par votre application
-          imagePullPolicy: IfNotPresent # Vous pouvez ajuster cela selon vos besoins
+            - containerPort: 80

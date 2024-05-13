@@ -1,14 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: { { include "mon-application.fullname" . } }
-  labels:
-    app: { { include "mon-application.name" . } }
+  name: my-react-app
 spec:
   selector:
-    app: { { include "mon-application.name" . } }
+    app: my-react-app
   ports:
     - protocol: TCP
-      port: 80 # Le port sur lequel votre application écoute à l'intérieur du conteneur
-      targetPort: 80 # Le port sur lequel votre application écoute à l'intérieur du conteneur
-  type: LoadBalancer # Type de service, assurez-vous que cela convient à votre environnement (ClusterIP, NodePort, LoadBalancer, etc.)
+      port: 80
+      targetPort: 80
