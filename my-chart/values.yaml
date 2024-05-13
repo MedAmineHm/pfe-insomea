@@ -10,7 +10,3 @@ service:
   type: LoadBalancer # Type de service Kubernetes
   port: 80 # Port sur lequel le service exposera votre application
 
-ingress:
-  enabled: true # Activer ou désactiver l'ingress
-  hosts:
-    - host: mon-application.example.com # Nom d'hôte associé à votre application dans l'ingress
