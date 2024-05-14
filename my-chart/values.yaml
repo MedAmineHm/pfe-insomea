@@ -1,12 +1,19 @@
-replicaCount: 1
-
-image:
-  repository: frontend-azure # Nom de votre image Docker
-  tag: frontend # Tag de votre image Docker
-  pullPolicy: IfNotPresent # Politique de pull de l'image Docker
-
-service:
-  name: mon-application
-  type: LoadBalancer # Type de service Kubernetes
-  port: 80 # Port sur lequel le service exposera votre application
-
+apiVersion: apps/v1
+kind: HelmRelease
+metadata:
+  name: my-react-app
+spec:
+  chart:
+    repository: https://charts.helm.sh/stable
+    name: nginx
+    version: 1.36.1
+  values:
+    replicaCount: 1
+    image:
+      repository: frontend-azure
+      tag: frontend
+      pullPolicy: IfNotPresent
+    service:
+      name: my-application
+      type: LoadBalancer
+      port: 80
