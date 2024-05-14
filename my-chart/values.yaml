@@ -15,5 +15,5 @@ spec:
       pullPolicy: IfNotPresent
     service:
       name: my-application
-      type: LoadBalancer
+      type: NodePort # Changement du type de service à NodePort
       port: 80
