@@ -19,11 +19,11 @@ jobs:
   - script: |
       npm install
       npm run build
-    displayName: 'npm install and build'
+    displayName: 'Install Dependencies and Build'
 
   - task: ArchiveFiles@2
     inputs:
-      rootFolderOrFile: '$(Build.BinariesDirectory)'
+      rootFolderOrFile: '$(Build.SourcesDirectory)'
       includeRootFolder: true
       archiveType: 'zip'
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
@@ -36,6 +36,7 @@ jobs:
       ArtifactName: 'drop'
       publishLocation: 'Container'
     displayName: 'Publish Build Artifacts'
+
   - task: Docker@2
     inputs:
       containerRegistry: 'docker'
@@ -44,4 +45,3 @@ jobs:
       Dockerfile: '**/Dockerfile'
       tags: 'frontend'
     displayName: 'Build and Push Docker Image'
-  
