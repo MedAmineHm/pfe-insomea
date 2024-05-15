@@ -1,57 +1,46 @@
 trigger:
-- main
+  - main
 
 pr:
-- '*'
+  - "*"
 
 pool:
   vmImage: ubuntu-latest
 
 jobs:
-- job: Build
-  displayName: 'Build and Publish Artifacts'
-  steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '20.x'
-    displayName: 'Install Node.js'
+  - job: Build
+    displayName: "Build and Publish Artifacts"
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "20.x"
+        displayName: "Install Node.js"
 
-  - script: |
-      # Supprimer le dossier node_modules
-      rm -rf node_modules
+      - script: |
+          npm install
+          npm run build
+        displayName: "npm install and build"
 
-      # Supprimer le fichier package-lock.json s'il existe
-      rm -f package-lock.json
+      - task: ArchiveFiles@2
+        inputs:
+          rootFolderOrFile: "$(Build.BinariesDirectory)"
+          includeRootFolder: true
+          archiveType: "zip"
+          archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+          replaceExistingArchive: true
+        displayName: "Archive Build Artifacts"
 
-      # Réinstaller les dépendances
-      npm install
-    displayName: 'Clean and Reinstall Dependencies'
-
-  - script: |
-      npm run build
-    displayName: 'Build'
-
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: '$(Build.SourcesDirectory)'
-      includeRootFolder: true
-      archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-      replaceExistingArchive: true
-    displayName: 'Archive Build Artifacts'
-
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'drop'
-      publishLocation: 'Container'
-    displayName: 'Publish Build Artifacts'
-
-  - task: Docker@2
-    inputs:
-      containerRegistry: 'docker'
-      repository: 'mohamedamine1/pfe'
-      command: 'buildAndPush'
-      Dockerfile: '**/Dockerfile'
-      tags: 'frontend'
-    displayName: 'Build and Push Docker Image'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+          ArtifactName: "drop"
+          publishLocation: "Container"
+        displayName: "Publish Build Artifacts"
+      - task: Docker@2
+        inputs:
+          containerRegistry: "docker"
+          repository: "mohamedamine1/pfe"
+          command: "buildAndPush"
+          Dockerfile: "**/Dockerfile"
+          tags: "frontend"
+        displayName: "Build and Push Docker Image"
