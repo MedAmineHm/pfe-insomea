@@ -17,9 +17,19 @@ jobs:
     displayName: 'Install Node.js'
 
   - script: |
-      npm install --legacy-peer-deps
+      # Supprimer le dossier node_modules
+      rm -rf node_modules
+
+      # Supprimer le fichier package-lock.json s'il existe
+      rm -f package-lock.json
+
+      # Réinstaller les dépendances
+      npm install
+    displayName: 'Clean and Reinstall Dependencies'
+
+  - script: |
       npm run build
-    displayName: 'Install Dependencies and Build'
+    displayName: 'Build'
 
   - task: ArchiveFiles@2
     inputs:
