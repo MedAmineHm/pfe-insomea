@@ -19,3 +19,6 @@ spec:
           image: mohamedamine1/frontend-azure:frontend
           ports:
             - containerPort: 3000
+          env:
+            - name: REACT_APP_API_URL
+              value: "http://my-nest-app-service:3001"
