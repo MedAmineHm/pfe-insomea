@@ -12,7 +12,7 @@ spec:
     replicaCount: 1
     image:
       repository: frontend-azure
-      tag: frontend
+      tag: front
       pullPolicy: IfNotPresent
     service:
       name: my-react-app-service
