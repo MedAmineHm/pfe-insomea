@@ -7,5 +7,5 @@ spec:
     app: my-react-app
   type: LoadBalancer
   ports:
-    - port: y3000
+    - port: 3000
       targetPort: 3000
