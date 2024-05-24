@@ -19,7 +19,7 @@ jobs:
       - script: |
           npm install
           npm run build
-        displayName: "npm install and build"
+        displayName: "npm install --legacy-peer-deps and build"
 
       - task: ArchiveFiles@2
         inputs:
