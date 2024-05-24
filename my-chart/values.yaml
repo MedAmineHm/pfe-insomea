@@ -11,8 +11,8 @@ spec:
   values:
     replicaCount: 1
     image:
-      repository: frontend-azure
-      tag: frontt-az
+      repository: mohamedamine1/frontend
+      tag: frontend-pfe
       pullPolicy: IfNotPresent
     service:
       name: my-react-app-service
