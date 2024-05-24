@@ -39,8 +39,8 @@ jobs:
       - task: Docker@2
         inputs:
           containerRegistry: "docker"
-          repository: "mohamedamine1/pfe"
+          repository: "mohamedamine1/frontend"
           command: "buildAndPush"
           Dockerfile: "**/Dockerfile"
-          tags: "frontend"
+          tags: "frontend-pfe"
         displayName: "Build and Push Docker Image"
