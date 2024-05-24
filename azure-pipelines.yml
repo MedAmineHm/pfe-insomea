@@ -1,5 +1,9 @@
 trigger:
-  - main
+  branches:
+    exclude:
+      - main
+    include:
+      - auth
 
 pr:
   - "*"
@@ -11,6 +15,13 @@ jobs:
   - job: Build
     displayName: "Build and Publish Artifacts"
     steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 1
+        persistCredentials: true
+        
+        
+      
       - task: NodeTool@0
         inputs:
           versionSpec: "20.x"
@@ -36,6 +47,7 @@ jobs:
           ArtifactName: "drop"
           publishLocation: "Container"
         displayName: "Publish Build Artifacts"
+      
       - task: Docker@2
         inputs:
           containerRegistry: "docker"
