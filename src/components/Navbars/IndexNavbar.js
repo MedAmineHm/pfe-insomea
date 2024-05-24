@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Collapse,
@@ -16,17 +16,22 @@ import {
   Col,
   UncontrolledTooltip,
 } from "reactstrap";
+import Button from "react-bootstrap/Button";
 
 export default function IndexNavbar() {
-  const [collapseOpen, setCollapseOpen] = React.useState(false);
-  const [collapseOut, setCollapseOut] = React.useState("");
-  const [color, setColor] = React.useState("navbar-transparent");
-  React.useEffect(() => {
+  const [collapseOpen, setCollapseOpen] = useState(false);
+  const [collapseOut, setCollapseOut] = useState("");
+  const [color, setColor] = useState("navbar-transparent");
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [startForFreeLoading, setStartForFreeLoading] = useState(false);
+
+  useEffect(() => {
     window.addEventListener("scroll", changeColor);
-    return function cleanup() {
+    return () => {
       window.removeEventListener("scroll", changeColor);
     };
   }, []);
+
   const changeColor = () => {
     if (
       document.documentElement.scrollTop > 99 ||
@@ -40,21 +45,38 @@ export default function IndexNavbar() {
       setColor("navbar-transparent");
     }
   };
+
+  const handleLogin = () => {
+    setLoginLoading(true);
+
+    setTimeout(() => {
+      setLoginLoading(false);
+      window.location.href = "/login-page";
+    }, 2000);
+  };
+
+  const handleStartForFree = () => {
+    setStartForFreeLoading(true);
+
+    setTimeout(() => {
+      setStartForFreeLoading(false);
+      window.location.href = "/login-page";
+    }, 2000);
+  };
+
   const toggleCollapse = () => {
     document.documentElement.classList.toggle("nav-open");
     setCollapseOpen(!collapseOpen);
   };
+
   const onCollapseExiting = () => {
     setCollapseOut("collapsing-out");
   };
+
   const onCollapseExited = () => {
     setCollapseOut("");
   };
-  const scrollToDownload = () => {
-    document
-      .getElementById("download-section")
-      .scrollIntoView({ behavior: "smooth" });
-  };
+
   return (
     <Navbar className={"fixed-top " + color} color-on-scroll="100" expand="lg">
       <Container>
@@ -119,9 +141,9 @@ export default function IndexNavbar() {
                   <i className="tim-icons icon-bullet-list-67" />
                   Register Page
                 </DropdownItem>
-                <DropdownItem tag={Link} to="/landing-page">
+                <DropdownItem tag={Link} to="/board">
                   <i className="tim-icons icon-image-02" />
-                  Landing Page
+                  Board Page
                 </DropdownItem>
                 <DropdownItem tag={Link} to="/profile-page">
                   <i className="tim-icons icon-single-02" />
@@ -131,12 +153,9 @@ export default function IndexNavbar() {
                   <i className="tim-icons icon-single-02" />
                   Login Page
                 </DropdownItem>
-                <DropdownItem tag={Link} to="/architecture-flow ">
-                  <i className="tim-icons icon-image-02" />
-                  Architecture Flow
-                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
+
             <NavItem className="p-0">
               <NavLink
                 data-placement="bottom"
@@ -173,6 +192,37 @@ export default function IndexNavbar() {
                 <p className="d-lg-none d-xl-none">Instagram</p>
               </NavLink>
             </NavItem>
+
+            <Nav
+              className="navbar-nav ml-auto"
+              navbar
+              style={{ marginLeft: "auto", marginRight: "0" }}
+            >
+              <NavItem className="p-0">
+                <Button
+                  color="primary"
+                  tag={Link}
+                  to="/login-page"
+                  style={{ background: "#2d2d2d" }}
+                  disabled={loginLoading}
+                  onClick={handleLogin}
+                >
+                  {loginLoading ? "Login..." : "Login"}
+                </Button>
+              </NavItem>
+              <NavItem className="p-0">
+                <Button
+                  color="primary"
+                  tag={Link}
+                  to="/login-page"
+                  style={{ background: "#2d2d2d" }}
+                  disabled={startForFreeLoading}
+                  onClick={handleStartForFree}
+                >
+                  {startForFreeLoading ? "Start for free..." : "Start for free"}
+                </Button>
+              </NavItem>
+            </Nav>
           </Nav>
         </Collapse>
       </Container>

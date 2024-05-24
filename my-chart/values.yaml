@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: HelmRelease
+metadata:
+  name: my-react-app
+spec:
+  chart:
+    # Assuming your React application is packaged as a Helm chart and available in this repository
+    repository: https://charts.example.com/stable
+    name: my-react-app
+    version: 1.0.0 # Adjust the version as per your chart
+  values:
+    replicaCount: 1
+    image:
+      repository: frontend-azure
+      tag: frontt-az
+      pullPolicy: IfNotPresent
+    service:
+      name: my-react-app-service
+      type: LoadBalancer
+      port: 3000

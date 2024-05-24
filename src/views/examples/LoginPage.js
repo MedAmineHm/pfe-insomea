@@ -1,12 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classnames from "classnames";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom";
-
-// reactstrap components
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
@@ -24,86 +21,95 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import Button from "react-bootstrap/Button";
 
-// core components
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
 
 export default function LoginPage() {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [squares1to6, setSquares1to6] = React.useState("");
-  const [squares7and8, setSquares7and8] = React.useState("");
-  const [emailFocus, setEmailFocus] = React.useState(false);
-  const [passwordFocus, setPasswordFocus] = React.useState(false);
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [squares1to6, setSquares1to6] = useState("");
+  const [squares7and8, setSquares7and8] = useState("");
+  const [emailFocus, setEmailFocus] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
+  const [error] = useState(null); // Add setError state
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginGoogleLoading, setLoginGoogleLoading] = useState(false);
 
-  const handleLogin = async () => {
-    const userData = {
-      email,
-      password,
-    };
+  const onLogin = async () => {
+    setLoginLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/auth/login",
-        userData
-      );
-
-      // Assuming response.data contains user and token properties
-      const { user, token } = response.data;
-
-      console.log("Login successful:", user);
-
-      // Store the token in localStorage or cookies for future use
-      // Example using localStorage:
-      localStorage.setItem("token", token);
-
-      // Redirect to the home page after successful login
-      navigate("/");
-    } catch (error) {
-      console.error("Error during login:", error);
-
-      if (error.response) {
-        console.error("Response data:", error.response.data);
-        console.error("Response status:", error.response.status);
-
-        // Add logic to display appropriate error messages to the user
-      } else if (error.request) {
-        console.error("Request error:", error.request);
-      } else {
-        console.error("Error message:", error.message);
-      }
+      const res = await axios.post("http://localhost:3001/auth/login", {
+        email,
+        password,
+      });
+      localStorage.setItem("token", res.data.token);
+      setTimeout(() => {
+        setLoginLoading(false);
+        window.location.href = "/board";
+      }, 2000);
+    } catch (err) {
+      console.error(err);
+      alert("can not login");
     }
   };
 
-  React.useEffect(() => {
+  const onLoginWithGoogle = () => {
+    try {
+      setLoginGoogleLoading(true);
+
+      const authWindow = window.open(
+        `http://localhost:3001/auth/google/`,
+        "_self"
+      );
+
+      const checkAuthInterval = setInterval(() => {
+        if (authWindow.closed) {
+          clearInterval(checkAuthInterval);
+
+          setLoginGoogleLoading(false);
+
+          window.location.href = "/board";
+        }
+      }, 2000);
+    } catch (error) {
+      console.error(
+        "Une erreur s'est produite lors de la tentative de connexion avec Google:",
+        error
+      );
+    }
+  };
+
+  useEffect(() => {
+    //if (localStorage.getItem("token")) navigate("/");
+
     document.body.classList.toggle("register-page");
     document.documentElement.addEventListener("mousemove", followCursor);
-    // Specify how to clean up after this effect:
-    return function cleanup() {
+
+    return () => {
       document.body.classList.toggle("register-page");
       document.documentElement.removeEventListener("mousemove", followCursor);
     };
   }, []);
+
   const followCursor = (event) => {
     let posX = event.clientX - window.innerWidth / 2;
     let posY = event.clientY - window.innerWidth / 6;
+
     setSquares1to6(
-      "perspective(500px) rotateY(" +
-        posX * 0.05 +
-        "deg) rotateX(" +
-        posY * -0.05 +
-        "deg)"
+      `perspective(500px) rotateY(${posX * 0.05}deg) rotateX(${
+        posY * -0.05
+      }deg)`
     );
     setSquares7and8(
-      "perspective(500px) rotateY(" +
-        posX * 0.02 +
-        "deg) rotateX(" +
-        posY * -0.02 +
-        "deg)"
+      `perspective(500px) rotateY(${posX * 0.02}deg) rotateX(${
+        posY * -0.02
+      }deg)`
     );
   };
+
   return (
     <>
       <ExamplesNavbar />
@@ -117,18 +123,25 @@ export default function LoginPage() {
                   <div
                     className="square square-7"
                     id="square7"
-                    style={{ transform: squares7and8 }}
+                    style={{
+                      transform: `perspective(500px) rotateY(${squares7and8})`,
+                      background: "#1a56a2",
+                    }}
                   />
                   <div
                     className="square square-8"
                     id="square8"
-                    style={{ transform: squares7and8 }}
+                    style={{
+                      transform: `perspective(500px) rotateY(${squares7and8})`,
+                    }}
                   />
+
                   <Card className="card-register">
                     <CardHeader>
                       <CardImg
                         alt="..."
-                        src={require("assets/img/square-purple-1.png")}
+                        src={require("assets/img/square5.png")}
+                        style={{ background: "#1f2251" }}
                       />
                       <CardTitle tag="h4">Login</CardTitle>
                     </CardHeader>
@@ -148,8 +161,8 @@ export default function LoginPage() {
                             placeholder="Email"
                             type="text"
                             onChange={(e) => setEmail(e.target.value)}
-                            onFocus={(e) => setEmailFocus(true)}
-                            onBlur={(e) => setEmailFocus(false)}
+                            onFocus={() => setEmailFocus(true)}
+                            onBlur={() => setEmailFocus(false)}
                           />
                         </InputGroup>
                         <InputGroup
@@ -164,10 +177,10 @@ export default function LoginPage() {
                           </InputGroupAddon>
                           <Input
                             placeholder="Password"
-                            type="password" // Change this line
+                            type="password"
                             onChange={(e) => setPassword(e.target.value)}
-                            onFocus={(e) => setPasswordFocus(true)}
-                            onBlur={(e) => setPasswordFocus(false)}
+                            onFocus={() => setPasswordFocus(true)}
+                            onBlur={() => setPasswordFocus(false)}
                           />
                         </InputGroup>
 
@@ -178,6 +191,7 @@ export default function LoginPage() {
                             <a
                               href="#pablo"
                               onClick={(e) => e.preventDefault()}
+                              style={{ color: "#7956fd" }}
                             >
                               terms and conditions
                             </a>
@@ -186,15 +200,58 @@ export default function LoginPage() {
                         </FormGroup>
                       </Form>
                     </CardBody>
-                    <CardFooter>
+                    <CardFooter className="text-center">
                       <Button
                         className="btn-round"
                         color="primary"
                         size="lg"
-                        onClick={handleLogin}
+                        onClick={onLogin}
+                        disabled={loginLoading}
+                        style={{ background: "#7956fd" }}
                       >
-                        Login
+                        {loginLoading ? "Logging in..." : "Login"}
                       </Button>
+
+                      <Button
+                        className="btn-round"
+                        color="primary"
+                        size="lg"
+                        onClick={onLoginWithGoogle}
+                        disabled={loginGoogleLoading}
+                        style={{ background: "#7956fd" }}
+                      >
+                        {loginGoogleLoading
+                          ? "Logging in..."
+                          : "Sign In With Google"}
+                      </Button>
+
+                      {error && (
+                        <div className="text-center mt-3 text-danger">
+                          {error}
+                        </div>
+                      )}
+
+                      <div className="text-center mt-3">
+                        <Link
+                          to="/forgot-password/:email"
+                          style={{ color: "#7956fd" }}
+                        >
+                          Forgot Password?
+                        </Link>
+                      </div>
+                      <div className="text-center mt-3">
+                        <p>
+                          Don't have an account?{" "}
+                          <Link
+                            to="/register-page"
+                            style={{ color: "#7956fd" }}
+                          >
+                            {" "}
+                            Register here
+                          </Link>
+                          .
+                        </p>
+                      </div>
                     </CardFooter>
                   </Card>
                 </Col>
@@ -203,32 +260,32 @@ export default function LoginPage() {
               <div
                 className="square square-1"
                 id="square1"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#1e3d89" }}
               />
               <div
                 className="square square-2"
                 id="square2"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#1a498e" }}
               />
               <div
                 className="square square-3"
                 id="square3"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-4"
                 id="square4"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-5"
                 id="square5"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-6"
                 id="square6"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
             </Container>
           </div>

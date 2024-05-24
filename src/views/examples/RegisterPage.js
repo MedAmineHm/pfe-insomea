@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import classnames from "classnames";
 import axios from "axios";
-import bcrypt from "bcryptjs";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // reactstrap components
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
@@ -28,49 +26,72 @@ import {
 // core components
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
+import Button from "react-bootstrap/Button";
 
 export default function RegisterPage() {
-  const [fullName, setFullName] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [lastNameFocus, setLastNameFocus] = React.useState(false);
+
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [squares1to6, setSquares1to6] = React.useState("");
   const [squares7and8, setSquares7and8] = React.useState("");
-  const [fullNameFocus, setFullNameFocus] = React.useState(false);
+  const [firstNameFocus, setFirstNameFocus] = React.useState(false);
   const [emailFocus, setEmailFocus] = React.useState(false);
   const [passwordFocus, setPasswordFocus] = React.useState(false);
-  const navigate = useNavigate();
+  const [registerLoading, setRegisterLoading] = useState(false);
+  const [registerGoogleLoading, setRegisterGoogleLoading] = useState(false);
 
-  const handleRegistration = async () => {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const userData = {
-      fullName: fullName, // or simply fullName, as key and variable name match
-      email,
-      password: hashedPassword,
-    };
-
+  const onRegister = async () => {
+    setRegisterLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:5000/users",
-        userData
-      );
-      console.log(response.data);
+      const res = await axios.post("http://localhost:3001/auth/register", {
+        email,
+        firstName,
+        lastName,
+        password,
+      });
+      localStorage.setItem("token", res.data.token);
+      setTimeout(() => {
+        setRegisterLoading(false);
+        window.location.href = "/login-page";
+      }, 2000);
+    } catch (err) {
+      console.error(err);
+      alert("can not register");
+    }
+  };
 
-      // Redirect to the login page after successful registration
-      navigate("/login-page");
+  const onRegisterWithGoogle = () => {
+    try {
+      setRegisterGoogleLoading(true);
+
+      const authWindow = window.open(
+        `http://localhost:3001/auth/google/`,
+        "_self"
+      );
+
+      const checkAuthInterval = setInterval(() => {
+        if (authWindow.closed) {
+          clearInterval(checkAuthInterval);
+
+          setRegisterGoogleLoading(false);
+
+          window.location.href = "/board";
+        }
+      }, 2000);
     } catch (error) {
-      console.error("Error:", error);
-      if (error.response) {
-        console.error("Response error:", error.response.data);
-        console.error("Response status:", error.response.status);
-      } else if (error.request) {
-        console.error("Request error:", error.request);
-      } else {
-        console.error("Error message:", error.message);
-      }
+      console.error(
+        "Une erreur s'est produite lors de la tentative de connexion avec Google:",
+        error
+      );
     }
   };
 
   React.useEffect(() => {
+    //if (localStorage.getItem("token")) navigate("/");
+
     document.body.classList.toggle("register-page");
     document.documentElement.addEventListener("mousemove", followCursor);
     // Specify how to clean up after this effect:
@@ -110,7 +131,10 @@ export default function RegisterPage() {
                   <div
                     className="square square-7"
                     id="square7"
-                    style={{ transform: squares7and8 }}
+                    style={{
+                      transform: `perspective(500px) rotateY(${squares7and8})`,
+                      background: "#1a56a2",
+                    }}
                   />
                   <div
                     className="square square-8"
@@ -121,7 +145,7 @@ export default function RegisterPage() {
                     <CardHeader>
                       <CardImg
                         alt="..."
-                        src={require("assets/img/square-purple-1.png")}
+                        src={require("assets/img/square5.png")}
                       />
                       <CardTitle tag="h4">Register</CardTitle>
                     </CardHeader>
@@ -129,7 +153,7 @@ export default function RegisterPage() {
                       <Form className="form">
                         <InputGroup
                           className={classnames({
-                            "input-group-focus": fullNameFocus,
+                            "input-group-focus": firstNameFocus,
                           })}
                         >
                           <InputGroupAddon addonType="prepend">
@@ -138,12 +162,31 @@ export default function RegisterPage() {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Full Name"
+                            placeholder="First Name"
                             type="text"
-                            value={fullName}
-                            onChange={(e) => setFullName(e.target.value)}
-                            onFocus={(e) => setFullNameFocus(true)}
-                            onBlur={(e) => setFullNameFocus(false)}
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            onFocus={(e) => setFirstNameFocus(true)}
+                            onBlur={(e) => setFirstNameFocus(false)}
+                          />
+                        </InputGroup>
+                        <InputGroup
+                          className={classnames({
+                            "input-group-focus": lastNameFocus,
+                          })}
+                        >
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="tim-icons icon-single-02" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Last Name"
+                            type="text"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            onFocus={(e) => setLastNameFocus(true)}
+                            onBlur={(e) => setLastNameFocus(false)}
                           />
                         </InputGroup>
                         <InputGroup
@@ -190,6 +233,7 @@ export default function RegisterPage() {
                             <a
                               href="#pablo"
                               onClick={(e) => e.preventDefault()}
+                              style={{ color: "#7956fd" }}
                             >
                               terms and conditions
                             </a>
@@ -203,10 +247,37 @@ export default function RegisterPage() {
                         className="btn-round"
                         color="primary"
                         size="lg"
-                        onClick={handleRegistration}
+                        onClick={onRegister}
+                        style={{ background: "#7956fd" }}
+                        disabled={registerLoading}
                       >
-                        Get Started
+                        {registerLoading ? "Register..." : "register"}
                       </Button>
+                      <Button
+                        className="btn-round"
+                        color="primary"
+                        size="lg"
+                        onClick={onRegisterWithGoogle}
+                        style={{ background: "#7956fd" }}
+                        disabled={registerGoogleLoading}
+                      >
+                        {registerGoogleLoading
+                          ? "Register with Google..."
+                          : "Register with Google"}
+                      </Button>
+                      <div className="text-center">
+                        <p>
+                          Already have an account?{" "}
+                          <Link
+                            to="/login-page"
+                            target="_blank"
+                            style={{ color: "#7956fd" }}
+                          >
+                            Login here
+                          </Link>
+                          .
+                        </p>
+                      </div>
                     </CardFooter>
                   </Card>
                 </Col>
@@ -215,32 +286,32 @@ export default function RegisterPage() {
               <div
                 className="square square-1"
                 id="square1"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#1e3d89" }}
               />
               <div
                 className="square square-2"
                 id="square2"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#1a498e" }}
               />
               <div
                 className="square square-3"
                 id="square3"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-4"
                 id="square4"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-5"
                 id="square5"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
               <div
                 className="square square-6"
                 id="square6"
-                style={{ transform: squares1to6 }}
+                style={{ transform: squares1to6, background: "#18356e" }}
               />
             </Container>
           </div>

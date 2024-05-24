@@ -1,7 +1,9 @@
 .tim-row {
   margin-bottom: 20px;
 }
-
+#board {
+  background-color: #fff !important;
+}
 .tim-white-buttons {
   background-color: #777777;
 }
