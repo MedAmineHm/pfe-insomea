@@ -1,5 +1,13 @@
 trigger:
+<<<<<<< HEAD
   - main
+=======
+  branches:
+    exclude:
+      - main
+    include:
+      - auth
+>>>>>>> 1700b3d8aadf581e4a6ed9f0564abc1f0b692a9b
 
 pr:
   - "*"
@@ -11,6 +19,16 @@ jobs:
   - job: Build
     displayName: "Build and Publish Artifacts"
     steps:
+<<<<<<< HEAD
+=======
+      - checkout: self
+        clean: true
+        fetchDepth: 1
+        persistCredentials: true
+        
+        
+      
+>>>>>>> 1700b3d8aadf581e4a6ed9f0564abc1f0b692a9b
       - task: NodeTool@0
         inputs:
           versionSpec: "20.x"
@@ -19,7 +37,11 @@ jobs:
       - script: |
           npm install
           npm run build
+<<<<<<< HEAD
         displayName: "npm install and build"
+=======
+        displayName: "npm install --legacy-peer-deps and build"
+>>>>>>> 1700b3d8aadf581e4a6ed9f0564abc1f0b692a9b
 
       - task: ArchiveFiles@2
         inputs:
@@ -36,6 +58,7 @@ jobs:
           ArtifactName: "drop"
           publishLocation: "Container"
         displayName: "Publish Build Artifacts"
+<<<<<<< HEAD
       - task: Docker@2
         inputs:
           containerRegistry: "docker"
@@ -43,4 +66,14 @@ jobs:
           command: "buildAndPush"
           Dockerfile: "**/Dockerfile"
           tags: "frontend"
+=======
+      
+      - task: Docker@2
+        inputs:
+          containerRegistry: "docker"
+          repository: "mohamedamine1/frontend"
+          command: "buildAndPush"
+          Dockerfile: "**/Dockerfile"
+          tags: "frontend-pfe"
+>>>>>>> 1700b3d8aadf581e4a6ed9f0564abc1f0b692a9b
         displayName: "Build and Push Docker Image"
