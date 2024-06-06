@@ -36,7 +36,7 @@ export default function ForgotPasswordPage() {
   const onSubmit = async () => {
     try {
       setLoading(true);
-      await axios.post("http://localhost:3001/auth/forgot-password", {
+      await axios.post("http://51.8.237.102:3001/auth/forgot-password", {
         email,
       });
       alert("Password reset email sent successfully!");
