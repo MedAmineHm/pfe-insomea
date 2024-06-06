@@ -46,7 +46,7 @@ export default function RegisterPage() {
   const onRegister = async () => {
     setRegisterLoading(true);
     try {
-      const res = await axios.post("http://localhost:3001/auth/register", {
+      const res = await axios.post("http://51.8.237.102:3001/auth/register", {
         email,
         firstName,
         lastName,
@@ -68,7 +68,7 @@ export default function RegisterPage() {
       setRegisterGoogleLoading(true);
 
       const authWindow = window.open(
-        `http://localhost:3001/auth/google/`,
+        `http://51.8.237.102:3001/auth/google/`,
         "_self"
       );
 

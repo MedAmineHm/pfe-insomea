@@ -41,7 +41,7 @@ export default function LoginPage() {
     setLoginLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3001/auth/login", {
+      const res = await axios.post("http://51.8.237.102:3001/auth/login", {
         email,
         password,
       });
@@ -61,7 +61,7 @@ export default function LoginPage() {
       setLoginGoogleLoading(true);
 
       const authWindow = window.open(
-        `http://localhost:3001/auth/google/`,
+        `http://51.8.237.102:3001/auth/google/`,
         "_self"
       );
 
