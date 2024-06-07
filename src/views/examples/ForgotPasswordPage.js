@@ -31,7 +31,7 @@ export default function ForgotPasswordPage() {
   const [squares7and8, setSquares7and8] = useState("");
   const [emailFocus, setEmailFocus] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null); // Add setError state
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const onSubmit = async () => {
     try {
