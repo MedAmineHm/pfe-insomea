@@ -1,15 +1,14 @@
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: HelmRelease
 metadata:
-  name: my-react-app
+  name: react-app
 spec:
   chart:
-    # Assuming your React application is packaged as a Helm chart and available in this repository
     repository: https://charts.example.com/stable
     name: my-react-app
     version: 1.0.0
   values:
-    replicaCount: 1
+    replicaCount: 3
     image:
       repository: mohamedamine1/frontend
       tag: frontend-pfe
@@ -17,4 +16,4 @@ spec:
     service:
       name: my-react-app-service
       type: LoadBalancer
-      port: 3000
+      port: 80
