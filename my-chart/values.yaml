@@ -7,7 +7,7 @@ spec:
     # Assuming your React application is packaged as a Helm chart and available in this repository
     repository: https://charts.example.com/stable
     name: my-react-app
-    version: 1.0.0 # Adjust the version as per your chart
+    version: 1.0.0
   values:
     replicaCount: 1
     image:
@@ -17,4 +17,4 @@ spec:
     service:
       name: my-react-app-service
       type: LoadBalancer
-      port: 80
+      port: 3000
