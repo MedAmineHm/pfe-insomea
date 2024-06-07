@@ -41,7 +41,7 @@ export default function LoginPage() {
     setLoginLoading(true);
 
     try {
-      const res = await axios.post("http://48.217.203.109:3001/auth/login", {
+      const res = await axios.post("http://48.217.215.181:3001/auth/login", {
         email,
         password,
       });
@@ -61,7 +61,7 @@ export default function LoginPage() {
       setLoginGoogleLoading(true);
 
       const authWindow = window.open(
-        `http://48.217.203.109:3001/auth/google/`,
+        `http://48.217.215.181:3001/auth/google/`,
         "_self"
       );
 

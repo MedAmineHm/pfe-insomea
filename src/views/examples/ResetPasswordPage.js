@@ -45,7 +45,7 @@ export default function ResetPasswordPage() {
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get("secret");
 
-      await axios.post("http://48.217.203.109:3001/auth/reset-password", {
+      await axios.post("http://48.217.215.181:3001/auth/reset-password", {
         token,
         newPassword,
       });

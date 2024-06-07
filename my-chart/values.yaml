@@ -1,13 +1,13 @@
-apiVersion: apps/v1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: my-react-app
 spec:
+  releaseName: my-react-app
   chart:
-    # Assuming your React application is packaged as a Helm chart and available in this repository
     repository: https://charts.example.com/stable
     name: my-react-app
-    version: 1.0.0 # Adjust the version as per your chart
+    version: 1.0.0
   values:
     replicaCount: 1
     image:
@@ -15,6 +15,5 @@ spec:
       tag: frontend-pfe
       pullPolicy: IfNotPresent
     service:
-      name: my-react-app-service
       type: LoadBalancer
       port: 3000
