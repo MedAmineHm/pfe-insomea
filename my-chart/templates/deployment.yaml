@@ -18,4 +18,4 @@ spec:
         - name: my-react-app
           image: mohamedamine1/frontend:frontend-pfe
           ports:
-            - containerPort: 3000
+            - containerPort: 80
