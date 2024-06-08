@@ -36,7 +36,7 @@ export default function LoginPage() {
   const [error] = useState(null); // Add setError state
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginGoogleLoading, setLoginGoogleLoading] = useState(false);
-  const apiUrl = "http://48.217.215.181:3001";
+  const apiUrl = "http://48.217.215.181:80";
 
   const onLogin = async () => {
     setLoginLoading(true);

@@ -9,11 +9,12 @@ spec:
     name: my-react-app
     version: 1.0.0
   values:
-    replicaCount: 1
+    replicaCount: 3
     image:
       repository: mohamedamine1/frontend
       tag: frontend-pfe
       pullPolicy: IfNotPresent
     service:
       type: LoadBalancer
-      port: 3000
+      port: 80
+      targetPort: 3000
