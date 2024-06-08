@@ -42,11 +42,12 @@ export default function RegisterPage() {
   const [passwordFocus, setPasswordFocus] = React.useState(false);
   const [registerLoading, setRegisterLoading] = useState(false);
   const [registerGoogleLoading, setRegisterGoogleLoading] = useState(false);
+  const apiUrl = "http://48.217.215.181:3001";
 
   const onRegister = async () => {
     setRegisterLoading(true);
     try {
-      const res = await axios.post("http://48.217.215.181:3001/auth/register", {
+      const res = await axios.post(`${apiUrl}/auth/register`, {
         email,
         firstName,
         lastName,
@@ -67,10 +68,7 @@ export default function RegisterPage() {
     try {
       setRegisterGoogleLoading(true);
 
-      const authWindow = window.open(
-        `http://48.217.215.181:3001/auth/google/`,
-        "_self"
-      );
+      const authWindow = window.open(`${apiUrl}/auth/google/`, "_self");
 
       const checkAuthInterval = setInterval(() => {
         if (authWindow.closed) {

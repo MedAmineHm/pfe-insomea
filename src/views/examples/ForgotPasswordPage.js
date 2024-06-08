@@ -33,10 +33,11 @@ export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const apiUrl = "http://48.217.215.181:3001";
   const onSubmit = async () => {
     try {
       setLoading(true);
-      await axios.post("http://48.217.215.181:3001/auth/forgot-password", {
+      await axios.post(`${apiUrl}/auth/forgot-password`, {
         email,
       });
       alert("Password reset email sent successfully!");

@@ -34,6 +34,8 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const apiUrl = "http://48.217.215.181:3001";
+
   const onSubmit = async () => {
     try {
       setLoading(true);
@@ -45,7 +47,7 @@ export default function ResetPasswordPage() {
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get("secret");
 
-      await axios.post("http://48.217.215.181:3001/auth/reset-password", {
+      await axios.post(`${apiUrl}/auth/reset-password`, {
         token,
         newPassword,
       });

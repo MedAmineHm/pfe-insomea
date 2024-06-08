@@ -36,12 +36,13 @@ export default function LoginPage() {
   const [error] = useState(null); // Add setError state
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginGoogleLoading, setLoginGoogleLoading] = useState(false);
+  const apiUrl = "http://48.217.215.181:3001";
 
   const onLogin = async () => {
     setLoginLoading(true);
 
     try {
-      const res = await axios.post("http://48.217.215.181:3001/auth/login", {
+      const res = await axios.post(`${apiUrl}/auth/login`, {
         email,
         password,
       });
@@ -60,10 +61,7 @@ export default function LoginPage() {
     try {
       setLoginGoogleLoading(true);
 
-      const authWindow = window.open(
-        `http://48.217.215.181:3001/auth/google/`,
-        "_self"
-      );
+      const authWindow = window.open(`${apiUrl}/auth/google/`, "_self");
 
       const checkAuthInterval = setInterval(() => {
         if (authWindow.closed) {
