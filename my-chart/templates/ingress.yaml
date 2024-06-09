@@ -1,0 +1,12 @@
+spec:
+  rules:
+    - host: example.com
+      http:
+        paths:
+          - path: /reactapp/
+            pathType: Prefix
+            backend:
+              service:
+                name: my-react-app-service
+                port:
+                  number: 80
