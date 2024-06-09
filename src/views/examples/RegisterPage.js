@@ -42,7 +42,7 @@ export default function RegisterPage() {
   const [passwordFocus, setPasswordFocus] = React.useState(false);
   const [registerLoading, setRegisterLoading] = useState(false);
   const [registerGoogleLoading, setRegisterGoogleLoading] = useState(false);
-  const apiUrl = "http://my-nest-app-service";
+  const apiUrl = "http://57.152.64.125:80";
 
   const onRegister = async () => {
     setRegisterLoading(true);

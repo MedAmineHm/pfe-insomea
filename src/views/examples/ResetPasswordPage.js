@@ -34,7 +34,7 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const apiUrl = "http://my-nest-app-service";
+  const apiUrl = "http://57.152.64.125:80";
 
   const onSubmit = async () => {
     try {
