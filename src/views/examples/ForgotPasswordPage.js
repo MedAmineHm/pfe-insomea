@@ -33,7 +33,7 @@ export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const apiUrl = "http://48.217.197.186:80";
+  const apiUrl = "my-nest-app-service";
   const onSubmit = async () => {
     try {
       setLoading(true);
