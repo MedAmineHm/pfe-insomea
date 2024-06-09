@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 const AcceptGoogleAuth = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams(); // Changed from let to const
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     const token = searchParams.get("token");
