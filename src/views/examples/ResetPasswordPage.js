@@ -40,9 +40,6 @@ export default function ResetPasswordPage() {
     try {
       setLoading(true);
 
-      // Simple password validation
-      // Check if passwords match
-
       // Continue with the password reset request
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get("secret");
