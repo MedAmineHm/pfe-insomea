@@ -34,7 +34,7 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const apiUrl = "http://57.152.98.97:3001";
+  const apiUrl = "http://57.152.98.72:3001";
 
   const onSubmit = async () => {
     try {

@@ -42,7 +42,7 @@ export default function RegisterPage() {
   const [passwordFocus, setPasswordFocus] = React.useState(false);
   const [registerLoading, setRegisterLoading] = useState(false);
   const [registerGoogleLoading, setRegisterGoogleLoading] = useState(false);
-  const apiUrl = "http://57.152.98.97:3001";
+  const apiUrl = "http://57.152.98.72:3001";
 
   const onRegister = async () => {
     setRegisterLoading(true);
