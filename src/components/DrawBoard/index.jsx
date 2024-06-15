@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ReactFlow, {
-  useEdgesState,
-  useNodesState,
   addEdge,
   Controls,
   MiniMap,
@@ -11,7 +9,7 @@ import ReactFlow, {
   getConnectedEdges,
   useReactFlow,
 } from "reactflow";
-import { find, findLastIndex, insert, propEq } from "ramda";
+import { clone, find, findIndex, findLastIndex, insert, propEq } from "ramda";
 import debounce from "lodash.debounce";
 import { useDisclosure } from "@mantine/hooks";
 
@@ -26,7 +24,8 @@ import NsgNode from "./NodeTypes/NsgNode";
 import PublicIpNode from "./NodeTypes/PublicIpNode";
 import DeleteModal from "../DeleteModal";
 import ConfigModal from "../ConfigModal";
-import { getNodeInitValues } from "../../utils/drawBoard";
+import { getNodeInitValues } from "utils/drawBoard";
+import { getNodeValues } from "utils/nodeConfigForm";
 
 const nodeTypes = {
   ResourceGroupNode,
@@ -39,14 +38,17 @@ const nodeTypes = {
   PublicIpNode,
 };
 
-const initialNodes = [];
-
-const initialEdges = [];
-
 let id = 0;
 const getId = (serviceId = "dndnode") => `${serviceId}_${id++}`;
 
-const DrawBoard = () => {
+const DrawBoard = ({
+  nodes,
+  setNodes,
+  onNodesChange,
+  edges,
+  setEdges,
+  onEdgesChange,
+}) => {
   const [deleteOpened, { open: deleteOpen, close: deleteClose }] =
     useDisclosure(false);
 
@@ -54,8 +56,6 @@ const DrawBoard = () => {
     useDisclosure(false);
 
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const { getIntersectingNodes } = useReactFlow();
   const [lastDropedNode, setLastDropedNode] = useState();
@@ -102,7 +102,13 @@ const DrawBoard = () => {
     configClose();
   };
 
-  const handleConfirmConfigNode = () => {
+  const handleConfirmConfigNode = (nodeDataValues) => {
+    const newNode = clone(selectedNode);
+    newNode.data.values = getNodeValues(nodeDataValues, newNode.type);
+    const selectedNodeIndex = findIndex(propEq(selectedNode.id, "id"))(nodes);
+    const newNodes = clone(nodes);
+    newNodes[selectedNodeIndex] = newNode;
+    setNodes(newNodes);
     setSelectedNode();
     configClose();
   };
@@ -335,8 +341,9 @@ const DrawBoard = () => {
         <ConfigModal
           opened={configOpened}
           close={handleCancelConfig}
-          selectedNode={selectedNode}
+          selectedNode={clone(selectedNode)}
           onConfirm={handleConfirmConfigNode}
+          nodes={nodes}
         />
       )}
     </div>

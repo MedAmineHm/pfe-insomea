@@ -7,24 +7,24 @@ export const getNodeInitValues = (nodeType) => {
     case "ResourceGroupNode":
       return {
         name: "Resource",
-        resourceName: "resource-group1",
-        location: "East US",
+        resourceName: "resource-group",
+        // location: "East US",
       };
     case "VnetNode":
       return {
         resourceName: "virtual_network",
         addressSpace: "10.0.0.0/16",
-        location: "East US",
+        // location: "East US",
         name: "vnet-kube",
-        resourceGroupName: "resource_group1",
+        // resourceGroupName: "resource_group1",
       };
     case "SubnetNode":
       return {
         resourceName: "virtual_network",
         addressPrefixes: "10.0.2.0/24",
-        location: "East US",
+        // location: "East US",
         name: "vnet-kube",
-        resourceGroupName: "resource_group1",
+        // resourceGroupName: "resource_group1",
       };
     case "DiscNode":
       return {

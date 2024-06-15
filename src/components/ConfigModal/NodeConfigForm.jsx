@@ -6,6 +6,7 @@ import classes from "./styles.module.css";
 import LocationInput from "../../forms/LocationInput";
 import ResourceNameInput from "../../forms/ResourceName";
 import NameInput from "../../forms/NameInput";
+import VirtualNetworkNameInput from "../../forms/VirtualNetworkNameInput";
 import ResourceGroupNameInput from "../../forms/ResourceGroupInput";
 import AddressSpaceInput from "../../forms/AddressSpaceInput";
 import AddressPrefixesInput from "../../forms/AddressPrefixesInput";
@@ -15,8 +16,9 @@ import NumberOfCoresInput from "../../forms/NumberOfCoresInput";
 import OsDiskSizeInMBInput from "../../forms/OsDiskSizeInMBInput";
 import ResourceDiskSizeInMBInput from "../../forms/ResourceDiskSizeInMB";
 import AllocationMethodInput from "../../forms/AllocationMethodInput";
+import { getNodeConfigDefaultValues } from "../../utils/nodeConfigForm";
 
-const NodeConfigForm = ({ node, close, onConfirm }) => {
+const NodeConfigForm = ({ node, close, onConfirm, nodes }) => {
   const {
     control,
     handleSubmit,
@@ -24,7 +26,7 @@ const NodeConfigForm = ({ node, close, onConfirm }) => {
   } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: node?.data?.values ? node.data.values : {},
+    defaultValues: getNodeConfigDefaultValues(node, nodes),
   });
 
   const Fields = () => {
@@ -62,8 +64,12 @@ const NodeConfigForm = ({ node, close, onConfirm }) => {
           <>
             <ResourceNameInput control={control} required={true} />
             <AddressPrefixesInput control={control} required={true} />
-            <LocationInput control={control} required={true} disabled />
             <NameInput control={control} required={true} />
+            <VirtualNetworkNameInput
+              control={control}
+              required={true}
+              disabled
+            />
             <ResourceGroupNameInput
               control={control}
               required={true}
@@ -152,9 +158,9 @@ const NodeConfigForm = ({ node, close, onConfirm }) => {
           Cancel
         </Button>
         <Button
+          type="submit"
           variant="filled"
           color="violet"
-          onClick={onConfirm}
           disabled={!isValid || isSubmitting}
         >
           Confirm

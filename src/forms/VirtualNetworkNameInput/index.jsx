@@ -2,7 +2,7 @@ import React from "react";
 import { TextInput } from "@mantine/core";
 import { Controller } from "react-hook-form";
 
-const ResourceGroupNameInput = ({
+const VirtualNetworkNameInput = ({
   control,
   disabled = false,
   required = false,
@@ -13,14 +13,14 @@ const ResourceGroupNameInput = ({
   return (
     <Controller
       control={control}
-      name="resourceGroupName"
+      name="vnetName"
       rules={rules}
       render={({ field: { onChange, value, ref }, fieldState: { error } }) => {
         return (
           <TextInput
             mt="md"
             size="sm"
-            label="Resource Group Name"
+            label="Virtual Network Name"
             control={control}
             disabled={disabled}
             value={value ?? ""}
@@ -36,4 +36,4 @@ const ResourceGroupNameInput = ({
   );
 };
 
-export default ResourceGroupNameInput;
+export default VirtualNetworkNameInput;

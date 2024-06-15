@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from "react";
 import { Handle, Position, useNodes } from "reactflow";
-import { Button, Image } from "@mantine/core";
+import { Button, Grid, Group, Image } from "@mantine/core";
 import { find } from "ramda";
 
 const vmImg =

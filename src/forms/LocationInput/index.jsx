@@ -1,6 +1,7 @@
 import React from "react";
 import { Select } from "@mantine/core";
 import { Controller } from "react-hook-form";
+import { useAzureLocationsStore } from "../../store";
 
 const LocationInput = ({
   control,
@@ -8,6 +9,8 @@ const LocationInput = ({
   required = false,
   ...rest
 }) => {
+  const { locationsNames } = useAzureLocationsStore();
+
   const rules = required || disabled ? { required: "Required!" } : {};
 
   return (
@@ -21,7 +24,6 @@ const LocationInput = ({
             mt="md"
             size="sm"
             label="Location"
-            placeholder="location"
             control={control}
             disabled={disabled}
             value={value ?? ""}
@@ -29,7 +31,7 @@ const LocationInput = ({
             withAsterisk={required}
             ref={ref}
             onChange={onChange}
-            data={["East US", "East US 2", "South Central US", "West US 2"]}
+            data={locationsNames || []}
             {...rest}
           />
         );

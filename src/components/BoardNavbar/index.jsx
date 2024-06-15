@@ -171,7 +171,7 @@ const BoardNavbar = () => {
       </ScrollArea>
 
       <div className={classes.footer}>
-        <p>bottom goes here</p>
+        <p style={{ opacity: 0.4 }}>@copyright 2024</p>
       </div>
     </nav>
   );
