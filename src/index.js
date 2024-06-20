@@ -8,16 +8,15 @@ import "@mantine/core/styles.css";
 import "assets/css/nucleo-icons.css";
 import "assets/scss/blk-design-system-react.scss";
 import "assets/demo/demo.css";
-
-import Index from "views/Index.js";
-import LandingPage from "views/examples/LandingPage.js";
-import RegisterPage from "views/examples/RegisterPage.js";
-import ProfilePage from "views/examples/ProfilePage.js";
-import LoginPage from "views/examples/LoginPage.js";
-import ForgotPasswordPage from "views/examples/ForgotPasswordPage";
-import AcceptGoogleAuth from "views/examples/AcceptGoogleAuth";
-import ResetPasswordPage from "views/examples/ResetPasswordPage";
-import TerraBoard from "views/examples/screens/TerraBoard";
+import Index from "screens/Test";
+import LandingPage from "screens/Test/views/LandingPage";
+import RegisterPage from "screens/Test/views/RegisterPage";
+import ProfilePage from "screens/Test/views/ProfilePage";
+import LoginPage from "screens/Test/views/LoginPage";
+import ForgotPasswordPage from "screens/Test/views/ForgotPasswordPage";
+import AcceptGoogleAuth from "screens/Test/views/AcceptGoogleAuth";
+import ResetPasswordPage from "screens/Test/views/ResetPasswordPage";
+import TerraBoard from "screens/TerraBoard";
 
 const theme = createTheme({});
 
