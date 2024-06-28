@@ -8,6 +8,7 @@ import ReactFlow, {
   getOutgoers,
   getConnectedEdges,
   useReactFlow,
+  MarkerType,
 } from "reactflow";
 import { clone, find, findIndex, findLastIndex, insert, propEq } from "ramda";
 import debounce from "lodash.debounce";
@@ -21,11 +22,12 @@ import SubnetNode from "./NodeTypes/SubnetNode";
 import VmNode from "./NodeTypes/VmNode";
 import DiscNode from "./NodeTypes/DiscNode";
 import NsgNode from "./NodeTypes/NsgNode";
+import NetworkInterfaceNode from "./NodeTypes/NetworkInterfaceNode";
 import PublicIpNode from "./NodeTypes/PublicIpNode";
 import DeleteModal from "../DeleteModal";
 import ConfigModal from "../ConfigModal";
-import { getNodeInitValues } from "utils/drawBoard";
-import { getNodeValues } from "utils/nodeConfigForm";
+import { getNodeInitValues } from "../../utils/drawBoard";
+import { getNodeValues } from "../../utils/nodeConfigForm";
 
 const nodeTypes = {
   ResourceGroupNode,
@@ -36,6 +38,7 @@ const nodeTypes = {
   DiscNode,
   NsgNode,
   PublicIpNode,
+  NetworkInterfaceNode,
 };
 
 let id = 0;
@@ -63,7 +66,26 @@ const DrawBoard = ({
 
   // ======================== Edge Connect ==========================================
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params) => {
+      setEdges((eds) =>
+        addEdge(
+          {
+            ...params,
+            markerEnd: {
+              type: MarkerType.ArrowClosed,
+              width: 10,
+              height: 10,
+              color: "#FF0072",
+            },
+            style: {
+              strokeWidth: 2,
+              stroke: "#FF0072",
+            },
+          },
+          eds
+        )
+      );
+    },
     [setEdges]
   );
 
@@ -272,7 +294,8 @@ const DrawBoard = ({
       case "NsgNode":
       case "VmNode":
       case "DiscNode":
-        // find a ResourceGroupNode
+      case "NetworkInterfaceNode":
+        // find a SubnetNode
         const parentIntersection = find(
           (inter) => inter?.startsWith("subnet"),
           intersections

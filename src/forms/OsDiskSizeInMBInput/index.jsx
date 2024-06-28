@@ -6,6 +6,7 @@ const OsDiskSizeInMBInput = ({
   control,
   disabled = false,
   required = false,
+  setDiscName,
   ...rest
 }) => {
   const rules = required || disabled ? { required: "Required!" } : {};
@@ -28,8 +29,10 @@ const OsDiskSizeInMBInput = ({
             error={error?.message}
             withAsterisk={required}
             ref={ref}
-            onChange={onChange}
-            data={["1", "2", "3"]}
+            onChange={(e) => {
+              onChange(e);
+              setDiscName();
+            }}
             {...rest}
           />
         );

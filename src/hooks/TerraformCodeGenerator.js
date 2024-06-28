@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { processBoardResources } from "../utils/terraform";
 
-const useGenerateTerraformCode = (boardNodes) => {
+const useGenerateTerraformCode = (boardNodes, boardEdges) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [terraformCode, setTerraformCode] = useState();
@@ -13,10 +13,13 @@ const useGenerateTerraformCode = (boardNodes) => {
     const generateTerraformCode = async () => {
       try {
         // process board values
-        const processedBoardResources = processBoardResources(boardNodes);
+        const processedBoardResources = processBoardResources(
+          boardNodes,
+          boardEdges
+        );
 
         const code = await axios.post(
-          "http://localhost:3001/terraform/generate",
+          "http://57.152.98.72:3001/terraform/generate",
           { data: JSON.stringify(processedBoardResources) }
         );
         setTerraformCode(code.data.data);
@@ -29,7 +32,7 @@ const useGenerateTerraformCode = (boardNodes) => {
     };
 
     generateTerraformCode();
-  }, [boardNodes]);
+  }, [boardNodes, boardEdges]);
 
   return { terraformCode, isLoading, isError };
 };

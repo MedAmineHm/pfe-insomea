@@ -8,28 +8,28 @@ export const getNodeInitValues = (nodeType) => {
       return {
         name: "Resource",
         resourceName: "resource-group",
-        // location: "East US",
       };
     case "VnetNode":
       return {
         resourceName: "virtual_network",
         addressSpace: "10.0.0.0/16",
-        // location: "East US",
         name: "vnet-kube",
-        // resourceGroupName: "resource_group1",
       };
     case "SubnetNode":
       return {
         resourceName: "virtual_network",
         addressPrefixes: "10.0.2.0/24",
-        // location: "East US",
         name: "vnet-kube",
-        // resourceGroupName: "resource_group1",
+      };
+    case "NetworkInterfaceNode":
+      return {
+        name: "example-nic",
+        resourceName: "network-interface",
       };
     case "DiscNode":
       return {
-        location: "East US",
-        name: "Disk",
+        location: "",
+        name: "Standard_B1s",
         maxDataDiskCount: "",
         memoryInMB: "",
         numberOfCores: "",
@@ -44,16 +44,15 @@ export const getNodeInitValues = (nodeType) => {
       };
     case "PublicIpNode":
       return {
+        resourceName: "public-ip",
         name: "Public Ip",
-        resourceGroupName: "resource_group1",
-        location: "East US",
-        allocationMethod: "",
+        allocationMethod: "Dynamic",
       };
     case "VmNode":
       return {
         name: "Virtual Machine",
-        resourceGroupName: "resource_group1",
-        location: "East US",
+        resourceName: "VM",
+        adminUsername: "adminuser",
       };
     default:
       return {

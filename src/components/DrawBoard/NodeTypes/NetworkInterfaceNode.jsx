@@ -1,14 +1,19 @@
 import React, { memo, useMemo } from "react";
 import { Handle, Position, useNodes } from "reactflow";
-import { Button, Grid, Group, Image } from "@mantine/core";
+import { Button, Image } from "@mantine/core";
 import { find } from "ramda";
-import { outNodeStyles } from "../../../utils/nodeStyles";
+import { inNodeStyles, outNodeStyles } from "../../../utils/nodeStyles";
 
 const vmImg =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbPEnsh4WPKQ3oZox7mddxCbAUfZgJyWoLDCx86IxDmEKdcUzmbglShv37lGw64fmyyHo&usqp=CAU";
+  "https://www.devopspertise.com/img/blog/title-azure-devops-automated-network-security-group-nsg-backup.png";
 
-const PublicIpNode = ({ data, selected = false, isConnectable, id }) => {
-  const { forceToolbarVisible, toolbarPosition, actions } = data;
+const NetworkInterfaceNode = ({
+  data,
+  selected = false,
+  isConnectable,
+  id,
+}) => {
+  const { actions } = data;
   const nodes = useNodes();
   const node = useMemo(() => find((n) => n.id === id, nodes), [nodes, id]);
 
@@ -45,7 +50,7 @@ const PublicIpNode = ({ data, selected = false, isConnectable, id }) => {
             textAlign: "center",
           }}
         >
-          Public IP
+          Network Interface
         </p>
 
         <Button
@@ -71,17 +76,17 @@ const PublicIpNode = ({ data, selected = false, isConnectable, id }) => {
       </div>
 
       <Handle
-        type="source"
-        position={Position.Right}
+        type="target"
+        position={Position.Left}
         id="in1"
         isConnectable={isConnectable}
-        style={outNodeStyles}
+        style={inNodeStyles}
       />
 
       <Handle
         type="source"
-        position={Position.Left}
-        id="in2"
+        position={Position.Right}
+        id="out3"
         isConnectable={isConnectable}
         style={outNodeStyles}
       />
@@ -89,7 +94,7 @@ const PublicIpNode = ({ data, selected = false, isConnectable, id }) => {
       <Handle
         type="source"
         position={Position.Top}
-        id="in3"
+        id="out1"
         isConnectable={isConnectable}
         style={outNodeStyles}
       />
@@ -97,7 +102,7 @@ const PublicIpNode = ({ data, selected = false, isConnectable, id }) => {
       <Handle
         type="source"
         position={Position.Bottom}
-        id="in4"
+        id="out2"
         isConnectable={isConnectable}
         style={outNodeStyles}
       />
@@ -105,4 +110,4 @@ const PublicIpNode = ({ data, selected = false, isConnectable, id }) => {
   );
 };
 
-export default memo(PublicIpNode);
+export default memo(NetworkInterfaceNode);

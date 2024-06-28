@@ -11,7 +11,7 @@ const getLocationsNames = async (set) => {
     const locationsNames = res.data.data;
     set(() => ({ locationsNames, isLocationsNamesLoading: false }));
   } catch {
-    console.error("Cannot load locations names!");
+    console.error("Can not load locations names!");
     set(() => ({ locationsNames: null, isLocationsNamesLoading: false }));
   }
 };

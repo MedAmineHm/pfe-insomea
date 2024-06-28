@@ -2,6 +2,7 @@ import React, { memo, useMemo } from "react";
 import { Handle, Position, useNodes } from "reactflow";
 import { Button, Image } from "@mantine/core";
 import { find } from "ramda";
+import { inNodeStyles } from "../../../utils/nodeStyles";
 
 const vmImg =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCmeJn27_bJKgT3rIh29oklzXxWqWB7i_EjP80yACkIQ&s";
@@ -33,11 +34,18 @@ const DiscNode = ({ data, selected = false, id }) => {
             fontSize: 16,
           }}
         >
-          {data.values.name}
+          {data.values.name || "Disc"}
         </p>
 
-        <p style={{ opacity: 0.5, marginTop: -12, fontStyle: "italic" }}>
-          <span style={{ textDecoration: "underline" }}>parent</span>: test
+        <p
+          style={{
+            opacity: 0.5,
+            marginTop: -12,
+            fontStyle: "italic",
+            textAlign: "center",
+          }}
+        >
+          Disc
         </p>
 
         <Button
@@ -67,24 +75,28 @@ const DiscNode = ({ data, selected = false, id }) => {
         position={Position.Top}
         id="in1"
         isConnectable={true}
+        style={inNodeStyles}
       />
       <Handle
         type="target"
         position={Position.Left}
         id="in2"
         isConnectable={true}
+        style={inNodeStyles}
       />
       <Handle
         type="target"
         position={Position.Bottom}
         id="in3"
         isConnectable={true}
+        style={inNodeStyles}
       />
       <Handle
         type="target"
         position={Position.Right}
         id="in4"
         isConnectable={true}
+        style={inNodeStyles}
       />
     </>
   );

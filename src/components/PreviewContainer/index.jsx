@@ -5,17 +5,34 @@ import classes from "./styles.module.css";
 import CodeTab from "./CodeTab";
 import { useDebouncedState } from "@mantine/hooks";
 import { useGenerateTerraformCode } from "../../hooks/TerraformCodeGenerator";
-import { processBoardResources } from "../../utils/terraform";
+import { useTerraformCodeCost } from "../../hooks/TerraformCodeCost";
+import CostTab from "./CostTab";
 
 const PreviewContainer = ({ nodes, edges }) => {
   const [tab, setTab] = useState("code");
   const [boardNodes, setBoardNodes] = useDebouncedState([], 1000);
-  const { terraformCode, isLoading, isError } =
-    useGenerateTerraformCode(boardNodes);
+  const [boardEdges, setBoardEdges] = useDebouncedState([], 1000);
+  const { terraformCode, isLoading, isError } = useGenerateTerraformCode(
+    boardNodes,
+    boardEdges
+  );
+
+  const {
+    terraformCost,
+    isError: isErrorCost,
+    isLoading: isLoadingCost,
+    refreshTerraformCost,
+  } = useTerraformCodeCost(boardNodes, boardEdges);
+
+  console.log({ terraformCost });
 
   useEffect(() => {
     setBoardNodes(nodes);
   }, [nodes]);
+
+  useEffect(() => {
+    setBoardEdges(edges);
+  }, [edges]);
 
   const isTabCode = tab === "code";
   const isTabCost = tab === "cost";
@@ -50,6 +67,15 @@ const PreviewContainer = ({ nodes, edges }) => {
             code={terraformCode}
             isError={isError}
             isLoading={isLoading}
+          />
+        )}
+
+        {isTabCost && (
+          <CostTab
+            terraformCost={terraformCost}
+            isError={isErrorCost}
+            isLoading={isLoadingCost}
+            refreshTerraformCost={refreshTerraformCost}
           />
         )}
       </Box>

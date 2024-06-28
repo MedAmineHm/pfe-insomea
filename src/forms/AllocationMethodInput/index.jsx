@@ -29,7 +29,7 @@ const AllocationMethodInput = ({
             withAsterisk={required}
             ref={ref}
             onChange={onChange}
-            data={["dynamic", "static"]}
+            data={["Dynamic", "Static"]}
             {...rest}
           />
         );

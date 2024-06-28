@@ -1,12 +1,11 @@
 import React from "react";
-import { Select } from "@mantine/core";
+import { TextInput } from "@mantine/core";
 import { Controller } from "react-hook-form";
 
-const MemoryInMBInput = ({
+const AdminUserNameInput = ({
   control,
   disabled = false,
   required = false,
-  setDiscName,
   ...rest
 }) => {
   const rules = required || disabled ? { required: "Required!" } : {};
@@ -14,25 +13,21 @@ const MemoryInMBInput = ({
   return (
     <Controller
       control={control}
-      name="memoryInMB"
+      name="adminUsername"
       rules={rules}
       render={({ field: { onChange, value, ref }, fieldState: { error } }) => {
         return (
-          <Select
+          <TextInput
             mt="md"
             size="sm"
-            label="Memory in MB"
-            placeholder="memory in MB"
+            label="Admin Username"
             control={control}
             disabled={disabled}
             value={value ?? ""}
             error={error?.message}
             withAsterisk={required}
             ref={ref}
-            onChange={(e) => {
-              onChange(e);
-              setDiscName();
-            }}
+            onChange={onChange}
             {...rest}
           />
         );
@@ -41,4 +36,4 @@ const MemoryInMBInput = ({
   );
 };
 
-export default MemoryInMBInput;
+export default AdminUserNameInput;

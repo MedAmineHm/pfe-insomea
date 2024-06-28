@@ -11,6 +11,7 @@ import {
   IconAddressBook,
   IconUsersGroup,
   IconSubtask,
+  IconAccessPoint,
 } from "@tabler/icons-react";
 
 import classes from "./styles.module.css";
@@ -73,8 +74,8 @@ const servicesMock = [
         },
       },
       {
-        id: "disk",
-        label: "Disk",
+        id: "disc",
+        label: "Disc",
         description: "",
         icon: IconDatabase,
         type: "DiscNode",
@@ -135,12 +136,25 @@ const servicesMock = [
           height: 230,
         },
       },
+      // {
+      //   id: "nsg",
+      //   label: " Network Security Group",
+      //   description: "",
+      //   icon: IconUsersGroup,
+      //   type: "NsgNode",
+      //   serviceType: "node",
+      //   zIndex: 5,
+      //   dimensions: {
+      //     width: 170,
+      //     height: 230,
+      //   },
+      // },
       {
-        id: "nsg",
-        label: " Network Security Group",
+        id: "networkInterface",
+        label: " Network Interface",
         description: "",
-        icon: IconUsersGroup,
-        type: "NsgNode",
+        icon: IconAccessPoint,
+        type: "NetworkInterfaceNode",
         serviceType: "node",
         zIndex: 5,
         dimensions: {

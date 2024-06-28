@@ -1,13 +1,10 @@
 import React from "react";
-import { Box, Button, Group, Modal } from "@mantine/core";
+import { Box, Modal } from "@mantine/core";
 
 import classes from "./styles.module.css";
 import NodeConfigForm from "./NodeConfigForm";
-import { useLoadNodeConfigFormOptions } from "../../hooks/NodeConfigForm";
 
 const ConfigModal = ({ opened, close, onConfirm, selectedNode, nodes }) => {
-  // const { options, isLoading, isError } = useLoadNodeConfigFormOptions();
-
   return (
     <Modal
       opened={opened}

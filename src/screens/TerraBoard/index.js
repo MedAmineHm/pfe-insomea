@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { ReactFlowProvider, useEdgesState, useNodesState } from "reactflow";
 import { Grid } from "@mantine/core";
 
-import { useAzureLocationsStore } from "store";
-import BoardContainer from "components/BoardContainer";
-import DrawBoard from "components/DrawBoard";
-import PreviewContainer from "components/PreviewContainer";
+import { useAzureLocationsStore } from "../../store";
+import BoardContainer from "../../components/BoardContainer";
+import DrawBoard from "../../components/DrawBoard";
+import ResizableSidebar from "../../components/ResizableSidebar";
+import PreviewContainer from "../../components/PreviewContainer";
 
 const initialNodes = [];
 const initialEdges = [];
