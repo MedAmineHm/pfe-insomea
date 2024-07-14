@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import classnames from "classnames";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 import {
   Button,
   Card,
   CardHeader,
   CardBody,
   CardFooter,
+  CardTitle,
+  Label,
+  FormGroup,
+  Form,
   Input,
   InputGroupAddon,
   InputGroupText,
@@ -14,70 +20,38 @@ import {
   Container,
   Row,
   Col,
-  Form,
-  FormGroup,
-  Label,
-  CardTitle,
-  Alert, // Add this import for displaying error messages
 } from "reactstrap";
+
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
-import axios from "axios";
 
-export default function ResetPasswordPage() {
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+export default function ForgotPasswordPage() {
+  const [email, setEmail] = useState("");
   const [squares1to6, setSquares1to6] = useState("");
   const [squares7and8, setSquares7and8] = useState("");
+  const [emailFocus, setEmailFocus] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [passwordFocus, setPasswordFocus] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
-  const apiUrl = "http://57.152.98.72:3001";
-
+  const apiUrl = "http://localhost:3001";
   const onSubmit = async () => {
     try {
       setLoading(true);
-
-      // Continue with the password reset request
-      const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get("secret");
-
-      await axios.post(`${apiUrl}/auth/reset-password`, {
-        token,
-        newPassword,
+      await axios.post(`${apiUrl}/auth/forgot-password`, {
+        email,
       });
-
-      // Reset form and show success message
-      setNewPassword("");
-      setConfirmPassword("");
-      setError(null);
-      alert("Password reset successful!");
-      navigate("/");
+      alert("Password reset email sent successfully!");
+      navigate("/login-page");
     } catch (ex) {
-      // Handle errors
+      console.error(ex);
+      setError("Failed to submit. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    const followCursor = (event) => {
-      let posX = event.clientX - window.innerWidth / 2;
-      let posY = event.clientY - window.innerWidth / 6;
-
-      setSquares1to6(
-        `perspective(500px) rotateY(${posX * 0.05}deg) rotateX(${
-          posY * -0.05
-        }deg)`
-      );
-      setSquares7and8(
-        `perspective(500px) rotateY(${posX * 0.02}deg) rotateX(${
-          posY * -0.02
-        }deg)`
-      );
-    };
+    //if (localStorage.getItem("token")) navigate("/");
 
     document.body.classList.toggle("register-page");
     document.documentElement.addEventListener("mousemove", followCursor);
@@ -87,6 +61,22 @@ export default function ResetPasswordPage() {
       document.documentElement.removeEventListener("mousemove", followCursor);
     };
   }, []);
+
+  const followCursor = (event) => {
+    let posX = event.clientX - window.innerWidth / 2;
+    let posY = event.clientY - window.innerWidth / 6;
+
+    setSquares1to6(
+      `perspective(500px) rotateY(${posX * 0.05}deg) rotateX(${
+        posY * -0.05
+      }deg)`
+    );
+    setSquares7and8(
+      `perspective(500px) rotateY(${posX * 0.02}deg) rotateX(${
+        posY * -0.02
+      }deg)`
+    );
+  };
 
   return (
     <>
@@ -121,48 +111,31 @@ export default function ResetPasswordPage() {
                         className="text-sm"
                         style={{ background: "#1e8af8" }}
                       >
-                        Create password
-                      </CardTitle>
-                      <p> Please create a new password for your account</p>
+                        reset password
+                      </CardTitle>{" "}
                     </CardHeader>
                     <CardBody>
+                      <p className="text-center">
+                        Enter your email address, and we will send you
+                        instructions on how to create a new password.
+                      </p>
                       <Form className="form">
                         <InputGroup
                           className={classnames({
-                            "input-group-focus": passwordFocus,
+                            "input-group-focus": emailFocus,
                           })}
                         >
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
-                              <i className="tim-icons icon-lock-circle" />
+                              <i className="tim-icons icon-email-85" />
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="New Password"
-                            type="password"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            onFocus={() => setPasswordFocus(true)}
-                            onBlur={() => setPasswordFocus(false)}
-                          />
-                        </InputGroup>
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": passwordFocus,
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-lock-circle" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Confirm Password"
-                            type="password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            onFocus={() => setPasswordFocus(true)}
-                            onBlur={() => setPasswordFocus(false)}
+                            placeholder="Email"
+                            type="text"
+                            onChange={(e) => setEmail(e.target.value)}
+                            onFocus={() => setEmailFocus(true)}
+                            onBlur={() => setEmailFocus(false)}
                           />
                         </InputGroup>
 
@@ -173,19 +146,13 @@ export default function ResetPasswordPage() {
                             <a
                               href="#pablo"
                               onClick={(e) => e.preventDefault()}
-                              style={{ color: "#7956fd" }}
+                              style={{ colors: "#7956fd" }}
                             >
                               terms and conditions
                             </a>
                             .
                           </Label>
                         </FormGroup>
-
-                        {error && (
-                          <Alert color="danger" className="mt-3">
-                            {error}
-                          </Alert>
-                        )}
                       </Form>
                     </CardBody>
                     <CardFooter className="text-center">
@@ -197,8 +164,14 @@ export default function ResetPasswordPage() {
                         disabled={loading}
                         style={{ background: "#7956fd" }}
                       >
-                        {loading ? "Submitting..." : "Submit"}
+                        {loading ? "Submit..." : "Submit"}
                       </Button>
+
+                      {error && (
+                        <div className="text-center mt-3 text-danger">
+                          {error}
+                        </div>
+                      )}
                     </CardFooter>
                   </Card>
                 </Col>

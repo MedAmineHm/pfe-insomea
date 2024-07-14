@@ -5,7 +5,6 @@ import { Grid } from "@mantine/core";
 import { useAzureLocationsStore } from "../../store";
 import BoardContainer from "../../components/BoardContainer";
 import DrawBoard from "../../components/DrawBoard";
-import ResizableSidebar from "../../components/ResizableSidebar";
 import PreviewContainer from "../../components/PreviewContainer";
 
 const initialNodes = [];

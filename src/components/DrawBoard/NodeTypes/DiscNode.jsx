@@ -4,8 +4,7 @@ import { Button, Image } from "@mantine/core";
 import { find } from "ramda";
 import { inNodeStyles } from "../../../utils/nodeStyles";
 
-const vmImg =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCmeJn27_bJKgT3rIh29oklzXxWqWB7i_EjP80yACkIQ&s";
+const vmImg = require("../../../assets/img/disk.png");
 
 const DiscNode = ({ data, selected = false, id }) => {
   const { actions } = data;

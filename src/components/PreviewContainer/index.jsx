@@ -24,8 +24,6 @@ const PreviewContainer = ({ nodes, edges }) => {
     refreshTerraformCost,
   } = useTerraformCodeCost(boardNodes, boardEdges);
 
-  console.log({ terraformCost });
-
   useEffect(() => {
     setBoardNodes(nodes);
   }, [nodes]);
@@ -39,7 +37,7 @@ const PreviewContainer = ({ nodes, edges }) => {
 
   return (
     <Box className={classes.container}>
-      <Grid>
+      <Grid gutter="xs">
         <Grid.Col span={6}>
           <Button
             variant={isTabCode ? "filled" : "light"}

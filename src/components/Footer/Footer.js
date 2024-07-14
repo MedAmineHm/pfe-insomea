@@ -10,6 +10,7 @@ import {
   Col,
   UncontrolledTooltip,
 } from "reactstrap";
+import "./footer.css";
 
 export default function Footer() {
   return (
@@ -23,7 +24,8 @@ export default function Footer() {
             </p>
           </Col>
           <Col md="3">
-            <Nav>
+            <h3 className="footer-subtitle">Navigate</h3>
+            <Nav className="footer-nav">
               <NavItem>
                 <NavLink to="/" tag={Link}>
                   Home
@@ -51,9 +53,8 @@ export default function Footer() {
               </NavItem>
             </Nav>
           </Col>
-
           <Col md="3">
-            <h3 className="title">Follow us:</h3>
+            <h3 className="footer-subtitle">Follow us</h3>
             <div className="social-icons">
               <Button
                 className="btn-icon btn-neutral btn-round btn-simple"
@@ -93,11 +94,18 @@ export default function Footer() {
               </Button>
             </div>
           </Col>
-
           <Col md="3">
-            <h3 className="title">Contact us:</h3>
+            <h3 className="footer-subtitle">Contact us</h3>
             <p className="footer-text">Email: info@azureblueprints.com</p>
             <p className="footer-text">Phone: +1 (123) 456-7890</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col md="12" className="text-center">
+            <p className="footer-copy">
+              &copy; {new Date().getFullYear()} AZURE Blueprints. All rights
+              reserved.
+            </p>
           </Col>
         </Row>
       </Container>

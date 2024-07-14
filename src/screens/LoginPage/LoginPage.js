@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classnames from "classnames";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-// reactstrap components
 import {
   Card,
   CardHeader,
@@ -22,51 +21,45 @@ import {
   Row,
   Col,
 } from "reactstrap";
-
-// core components
-import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
-import Footer from "components/Footer/Footer.js";
 import Button from "react-bootstrap/Button";
 
-export default function RegisterPage() {
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [lastNameFocus, setLastNameFocus] = React.useState(false);
+import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
+import Footer from "components/Footer/Footer.js";
 
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [squares1to6, setSquares1to6] = React.useState("");
-  const [squares7and8, setSquares7and8] = React.useState("");
-  const [firstNameFocus, setFirstNameFocus] = React.useState(false);
-  const [emailFocus, setEmailFocus] = React.useState(false);
-  const [passwordFocus, setPasswordFocus] = React.useState(false);
-  const [registerLoading, setRegisterLoading] = useState(false);
-  const [registerGoogleLoading, setRegisterGoogleLoading] = useState(false);
-  const apiUrl = "http://57.152.98.72:3001";
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [squares1to6, setSquares1to6] = useState("");
+  const [squares7and8, setSquares7and8] = useState("");
+  const [emailFocus, setEmailFocus] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
+  const [error] = useState(null); // Add setError state
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginGoogleLoading, setLoginGoogleLoading] = useState(false);
+  const apiUrl = "http://localhost:3001";
 
-  const onRegister = async () => {
-    setRegisterLoading(true);
+  const onLogin = async () => {
+    setLoginLoading(true);
+
     try {
-      const res = await axios.post(`${apiUrl}/auth/register`, {
+      const res = await axios.post(`${apiUrl}/auth/login`, {
         email,
-        firstName,
-        lastName,
         password,
       });
       localStorage.setItem("token", res.data.token);
       setTimeout(() => {
-        setRegisterLoading(false);
-        window.location.href = "/login-page";
+        setLoginLoading(false);
+        window.location.href = "/board";
       }, 2000);
     } catch (err) {
       console.error(err);
-      alert("can not register");
+      alert("can not login");
     }
   };
 
-  const onRegisterWithGoogle = () => {
+  const onLoginWithGoogle = () => {
     try {
-      setRegisterGoogleLoading(true);
+      setLoginGoogleLoading(true);
 
       const authWindow = window.open(`${apiUrl}/auth/google/`, "_self");
 
@@ -74,7 +67,7 @@ export default function RegisterPage() {
         if (authWindow.closed) {
           clearInterval(checkAuthInterval);
 
-          setRegisterGoogleLoading(false);
+          setLoginGoogleLoading(false);
 
           window.location.href = "/board";
         }
@@ -87,35 +80,34 @@ export default function RegisterPage() {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     //if (localStorage.getItem("token")) navigate("/");
 
     document.body.classList.toggle("register-page");
     document.documentElement.addEventListener("mousemove", followCursor);
-    // Specify how to clean up after this effect:
-    return function cleanup() {
+
+    return () => {
       document.body.classList.toggle("register-page");
       document.documentElement.removeEventListener("mousemove", followCursor);
     };
   }, []);
+
   const followCursor = (event) => {
     let posX = event.clientX - window.innerWidth / 2;
     let posY = event.clientY - window.innerWidth / 6;
+
     setSquares1to6(
-      "perspective(500px) rotateY(" +
-        posX * 0.05 +
-        "deg) rotateX(" +
-        posY * -0.05 +
-        "deg)"
+      `perspective(500px) rotateY(${posX * 0.05}deg) rotateX(${
+        posY * -0.05
+      }deg)`
     );
     setSquares7and8(
-      "perspective(500px) rotateY(" +
-        posX * 0.02 +
-        "deg) rotateX(" +
-        posY * -0.02 +
-        "deg)"
+      `perspective(500px) rotateY(${posX * 0.02}deg) rotateX(${
+        posY * -0.02
+      }deg)`
     );
   };
+
   return (
     <>
       <ExamplesNavbar />
@@ -137,56 +129,22 @@ export default function RegisterPage() {
                   <div
                     className="square square-8"
                     id="square8"
-                    style={{ transform: squares7and8 }}
+                    style={{
+                      transform: `perspective(500px) rotateY(${squares7and8})`,
+                    }}
                   />
+
                   <Card className="card-register">
                     <CardHeader>
                       <CardImg
                         alt="..."
                         src={require("assets/img/square5.png")}
+                        style={{ background: "#1f2251" }}
                       />
-                      <CardTitle tag="h4">Register</CardTitle>
+                      <CardTitle tag="h4">Login</CardTitle>
                     </CardHeader>
                     <CardBody>
                       <Form className="form">
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": firstNameFocus,
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-single-02" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="First Name"
-                            type="text"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                            onFocus={(e) => setFirstNameFocus(true)}
-                            onBlur={(e) => setFirstNameFocus(false)}
-                          />
-                        </InputGroup>
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": lastNameFocus,
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-single-02" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Last Name"
-                            type="text"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                            onFocus={(e) => setLastNameFocus(true)}
-                            onBlur={(e) => setLastNameFocus(false)}
-                          />
-                        </InputGroup>
                         <InputGroup
                           className={classnames({
                             "input-group-focus": emailFocus,
@@ -201,8 +159,8 @@ export default function RegisterPage() {
                             placeholder="Email"
                             type="text"
                             onChange={(e) => setEmail(e.target.value)}
-                            onFocus={(e) => setEmailFocus(true)}
-                            onBlur={(e) => setEmailFocus(false)}
+                            onFocus={() => setEmailFocus(true)}
+                            onBlur={() => setEmailFocus(false)}
                           />
                         </InputGroup>
                         <InputGroup
@@ -217,10 +175,10 @@ export default function RegisterPage() {
                           </InputGroupAddon>
                           <Input
                             placeholder="Password"
-                            type="password" // Change this line
+                            type="password"
                             onChange={(e) => setPassword(e.target.value)}
-                            onFocus={(e) => setPasswordFocus(true)}
-                            onBlur={(e) => setPasswordFocus(false)}
+                            onFocus={() => setPasswordFocus(true)}
+                            onBlur={() => setPasswordFocus(false)}
                           />
                         </InputGroup>
 
@@ -240,38 +198,54 @@ export default function RegisterPage() {
                         </FormGroup>
                       </Form>
                     </CardBody>
-                    <CardFooter>
+                    <CardFooter className="text-center">
                       <Button
                         className="btn-round"
                         color="primary"
                         size="lg"
-                        onClick={onRegister}
+                        onClick={onLogin}
+                        disabled={loginLoading}
                         style={{ background: "#7956fd" }}
-                        disabled={registerLoading}
                       >
-                        {registerLoading ? "Register..." : "register"}
+                        {loginLoading ? "Logging in..." : "Login"}
                       </Button>
+
                       <Button
                         className="btn-round"
                         color="primary"
                         size="lg"
-                        onClick={onRegisterWithGoogle}
+                        onClick={onLoginWithGoogle}
+                        disabled={loginGoogleLoading}
                         style={{ background: "#7956fd" }}
-                        disabled={registerGoogleLoading}
                       >
-                        {registerGoogleLoading
-                          ? "Register with Google..."
-                          : "Register with Google"}
+                        {loginGoogleLoading
+                          ? "Logging in..."
+                          : "Sign In With Google"}
                       </Button>
-                      <div className="text-center">
+
+                      {error && (
+                        <div className="text-center mt-3 text-danger">
+                          {error}
+                        </div>
+                      )}
+
+                      <div className="text-center mt-3">
+                        <Link
+                          to="/forgot-password/:email"
+                          style={{ color: "#7956fd" }}
+                        >
+                          Forgot Password?
+                        </Link>
+                      </div>
+                      <div className="text-center mt-3">
                         <p>
-                          Already have an account?{" "}
+                          Don't have an account?{" "}
                           <Link
-                            to="/login-page"
-                            target="_blank"
+                            to="/register-page"
                             style={{ color: "#7956fd" }}
                           >
-                            Login here
+                            {" "}
+                            Register here
                           </Link>
                           .
                         </p>

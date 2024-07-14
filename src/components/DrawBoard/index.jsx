@@ -330,6 +330,8 @@ const DrawBoard = ({
       style={{
         width: "100%",
         height: "calc(100vh - 100px)",
+        paddingRight: 10,
+        borderRight: "1px solid #00000030",
       }}
     >
       <ReactFlow

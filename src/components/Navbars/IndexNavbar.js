@@ -17,6 +17,7 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import Button from "react-bootstrap/Button";
+import "./nav.css";
 
 export default function IndexNavbar() {
   const [collapseOpen, setCollapseOpen] = useState(false);
@@ -132,10 +133,12 @@ export default function IndexNavbar() {
                 href="#pablo"
                 nav
                 onClick={(e) => e.preventDefault()}
+                style={{ backgroundColor: "#3498db", color: "white" }}
               >
                 <i className="fa fa-cogs d-lg-none d-xl-none" />
                 Getting started
               </DropdownToggle>
+
               <DropdownMenu className="dropdown-with-icons">
                 <DropdownItem tag={Link} to="/register-page">
                   <i className="tim-icons icon-bullet-list-67" />

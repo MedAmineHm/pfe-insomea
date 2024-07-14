@@ -2,9 +2,9 @@ import React, { memo, useMemo } from "react";
 import { Handle, Position, useNodes } from "reactflow";
 import { Button, Image } from "@mantine/core";
 import { find } from "ramda";
+import { inNodeStyles, outNodeStyles } from "../../../utils/nodeStyles";
 
-const vmImg =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTefgWAwpvk2wdqXFWTY8mnSa59o6lWg3xwWgPeEXh4bg&s";
+const vmImg = require("../../../assets/img/vmmachine.png");
 
 const VmNode = ({ data, selected = false, id }) => {
   const { actions } = data;
@@ -65,15 +65,33 @@ const VmNode = ({ data, selected = false, id }) => {
       <Handle
         type="target"
         position={Position.Left}
-        id="in"
+        id="in1"
         isConnectable={true}
+        style={inNodeStyles}
       />
 
       <Handle
         type="source"
         position={Position.Right}
-        id="in"
+        id="out3"
         isConnectable={true}
+        style={outNodeStyles}
+      />
+
+      <Handle
+        type="source"
+        position={Position.Top}
+        id="out1"
+        isConnectable={true}
+        style={outNodeStyles}
+      />
+
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        id="out2"
+        isConnectable={true}
+        style={outNodeStyles}
       />
     </>
   );

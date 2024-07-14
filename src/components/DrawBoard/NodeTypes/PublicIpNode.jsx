@@ -4,8 +4,7 @@ import { Button, Grid, Group, Image } from "@mantine/core";
 import { find } from "ramda";
 import { outNodeStyles } from "../../../utils/nodeStyles";
 
-const vmImg =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbPEnsh4WPKQ3oZox7mddxCbAUfZgJyWoLDCx86IxDmEKdcUzmbglShv37lGw64fmyyHo&usqp=CAU";
+const vmImg = require("../../../assets/img/publicIP.png");
 
 const PublicIpNode = ({ data, selected = false, isConnectable, id }) => {
   const { forceToolbarVisible, toolbarPosition, actions } = data;

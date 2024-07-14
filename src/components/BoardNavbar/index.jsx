@@ -32,8 +32,8 @@ const servicesMock = [
         type: "LocationNode",
         backgroundColor: "#3c8fb0",
         dimensions: {
-          width: 850,
-          height: 700,
+          width: 1150,
+          height: 1000,
         },
         serviceType: "group",
         zIndex: 1,
@@ -46,8 +46,8 @@ const servicesMock = [
         type: "ResourceGroupNode",
         backgroundColor: "#b06e3c",
         dimensions: {
-          width: 800,
-          height: 600,
+          width: 1100,
+          height: 940,
         },
         serviceType: "group",
         zIndex: 2,
@@ -105,8 +105,8 @@ const servicesMock = [
         backgroundColor: "#2CC8A4",
         zIndex: 3,
         dimensions: {
-          width: 550,
-          height: 550,
+          width: 800,
+          height: 880,
         },
       },
       {
@@ -119,8 +119,8 @@ const servicesMock = [
         zIndex: 4,
         backgroundColor: "#e0d236",
         dimensions: {
-          width: 500,
-          height: 450,
+          width: 750,
+          height: 820,
         },
       },
       {
