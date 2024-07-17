@@ -30,6 +30,8 @@ jobs:
           cliProjectKey: 'pfe-frontend_pfe-frontend_d534d593-5945-415e-ae60-69d4d3f041cc'
           cliProjectName: 'pfe-frontend'
           cliSources: '.'
+          extraProperties: |
+            sonar.host.url=http://192.168.1.11:9000
         displayName: "Prepare SonarQube Analysis"
 
       - task: SonarQubeAnalyze@6
