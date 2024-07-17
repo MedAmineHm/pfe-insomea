@@ -5,7 +5,7 @@ pr:
   - "*"
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
 jobs:
   - job: Build
@@ -20,6 +20,25 @@ jobs:
           npm install
           npm run build
         displayName: "npm install and build"
+
+      - task: SonarQubePrepare@6
+        inputs:
+          SonarQube: 'My-sonarque'
+          scannerMode: 'CLI'
+          cliVersion: '4.0.0.1744'
+          configMode: 'manual'
+          cliProjectKey: 'pfe-frontend_pfe-frontend_d534d593-5945-415e-ae60-69d4d3f041cc'
+          cliProjectName: 'pfe-frontend'
+          cliSources: '.'
+        displayName: "Prepare SonarQube Analysis"
+
+      - task: SonarQubeAnalyze@6
+        displayName: "Run SonarQube Analysis"
+
+      - task: SonarQubePublish@6
+        inputs:
+          pollingTimeoutSec: '300'
+        displayName: "Publish SonarQube Analysis Results"
 
       - task: ArchiveFiles@2
         inputs:
@@ -36,6 +55,7 @@ jobs:
           ArtifactName: "drop"
           publishLocation: "Container"
         displayName: "Publish Build Artifacts"
+
       - task: Docker@2
         inputs:
           containerRegistry: "docker"
