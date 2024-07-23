@@ -17,9 +17,12 @@ export const useTerraformCodeCost = (boardNodes, boardEdges) => {
         boardEdges
       );
 
-      const code = await axios.post("http://localhost:3001/terraform/cost", {
-        data: JSON.stringify(processedBoardResources),
-      });
+      const code = await axios.post(
+        "http://172.179.168.137:3001/terraform/cost",
+        {
+          data: JSON.stringify(processedBoardResources),
+        }
+      );
       setTerraformCost(code.data.data);
       setIsLoading(false);
     } catch (e) {

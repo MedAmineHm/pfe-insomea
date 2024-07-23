@@ -19,7 +19,7 @@ const useGenerateTerraformCode = (boardNodes, boardEdges) => {
         );
 
         const code = await axios.post(
-          "http://localhost:3001/terraform/generate",
+          "http://172.179.168.137:3001/terraform/generate",
           { data: JSON.stringify(processedBoardResources) }
         );
         setTerraformCode(code.data.data);

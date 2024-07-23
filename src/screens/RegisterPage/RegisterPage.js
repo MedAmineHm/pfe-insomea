@@ -42,7 +42,7 @@ export default function RegisterPage() {
   const [passwordFocus, setPasswordFocus] = React.useState(false);
   const [registerLoading, setRegisterLoading] = useState(false);
   const [registerGoogleLoading, setRegisterGoogleLoading] = useState(false);
-  const apiUrl = "http://localhost:3001";
+  const apiUrl = "http://172.179.168.137:3001";
 
   const onRegister = async () => {
     setRegisterLoading(true);
@@ -260,8 +260,8 @@ export default function RegisterPage() {
                         disabled={registerGoogleLoading}
                       >
                         {registerGoogleLoading
-                          ? "Register with Google..."
-                          : "Register with Google"}
+                          ? "Sign up with Google..."
+                          : "Sign up with Google"}
                       </Button>
                       <div className="text-center">
                         <p>

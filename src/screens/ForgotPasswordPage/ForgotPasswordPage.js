@@ -33,7 +33,7 @@ export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const apiUrl = "http://localhost:3001";
+  const apiUrl = "http://172.179.168.137:3001";
   const onSubmit = async () => {
     try {
       setLoading(true);

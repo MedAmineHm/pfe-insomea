@@ -5,7 +5,7 @@ import { includes } from "ramda";
 const isNodeWithOptions = (node) => includes(node?.type, ["DiscNode"]);
 
 const nodeTypeOptionUrls = {
-  DiscNode: "http://localhost:3001/azure/vm-sizes/",
+  DiscNode: "http://172.179.168.137:3001/azure/vm-sizes/",
 };
 
 const makeUrl = (nodeTypeOptionUrl = "", location = "") =>
