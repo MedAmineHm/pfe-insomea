@@ -6,7 +6,7 @@ const getLocationsNames = async (set) => {
     set(() => ({ isLocationsNamesLoading: true }));
 
     const res = await axios.get(
-      `${process.env.REACT_APP_SERVER_URL}/azure/locations/names`
+      `http://172.179.168.137:3001/azure/locations/names`
     );
     const locationsNames = res.data.data;
     set(() => ({ locationsNames, isLocationsNamesLoading: false }));
