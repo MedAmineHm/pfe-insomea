@@ -11,7 +11,7 @@ export const useTerraformCodeCost = (boardNodes, boardEdges) => {
     setIsLoading(true);
     setIsError(false);
     try {
-      // process board values
+      // process board
       const processedBoardResources = processBoardResources(
         boardNodes,
         boardEdges
